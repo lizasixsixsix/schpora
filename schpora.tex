@@ -1,0 +1,1333 @@
+\documentclass[a4paper]{article}
+\usepackage{fontspec}
+\usepackage[14pt]{extsizes}
+\usepackage[left=2.15cm,
+            right=1.85cm,
+            top=1.5cm,
+            bottom=2.0cm,
+            bindingoffset=0cm]{geometry}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{eso-pic}
+\usepackage{graphicx}
+\usepackage{pgf}
+\usepackage{xtab, booktabs}
+\usepackage{anyfontsize}
+
+%----            
+            
+\usepackage[fleqn]{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+%----
+
+\usepackage{parskip}
+
+\setlength{\parskip}{2.5ex plus 0.5ex minus 0.5ex}
+
+\usepackage{setspace}
+
+%----
+
+\DeclareMathOperator{\cov}{Cov}
+
+\DeclareMathOperator{\const}{const}
+
+\makeatletter
+\newsavebox\myboxA
+\newsavebox\myboxB
+\newlength\mylenA
+
+\newcommand*\xoverline[2][0.75]{%
+    \sbox{\myboxA}{$\m@th#2$}%
+    \setbox\myboxB\null% Phantom box
+    \ht\myboxB=\ht\myboxA%
+    \dp\myboxB=\dp\myboxA%
+    \wd\myboxB=#1\wd\myboxA% Scale phantom
+    \sbox\myboxB{$\m@th\overline{\copy\myboxB}$}%  Overlined phantom
+    \setlength\mylenA{\the\wd\myboxA}% calc width diff
+    \addtolength\mylenA{-\the\wd\myboxB}%
+    \ifdim\wd\myboxB<\wd\myboxA%
+       \rlap{\hskip 0.5\mylenA\usebox\myboxB}{\usebox\myboxA}%
+    \else
+        \hskip -0.5\mylenA\rlap{\usebox\myboxA}{\hskip 0.5\mylenA\usebox\myboxB}%
+    \fi}
+\makeatother
+
+\newcommand{\nix}[1]{\xoverline{#1}}
+\newcommand{\nixx}[1]{\xoverline[0.875]{#1}}
+
+\newcommand{\rep}[1]{\widehat{#1}}
+
+\newcommand{\none}{\varnothing}
+
+\renewcommand{\qedsymbol}{\ensuremath{\blacksquare}}
+
+\newcommand{\qedd}{\hfill{\color{Dark}\qedsymbol}}
+
+\newcommand{\sleq}{\leqslant}
+\newcommand{\sgeq}{\geqslant}
+
+\newcommand{\sqrtt}[1]{\sqrt{\vphantom{qb} #1}}
+
+%----
+
+\setmainfont[
+    Path = ../Fonts/cm-unicode-0.7.0/,
+    Extension = .ttf,
+    UprightFont = * Roman,
+    ItalicFont = * Italic,
+    BoldFont = * Bold Extended Roman,
+    BoldItalicFont = * Bold Extended Italic,
+    SlantedFont = * Roman Slanted,
+    Ligatures = TeX]{CMU Serif}
+
+\setsansfont[
+    Path =../Fonts/cm-unicode-0.7.0/,
+    Extension = .ttf,
+    UprightFont = *,
+    ItalicFont = * Oblique,
+    BoldFont = * Bold Extended,
+    BoldItalicFont = * Bold Extended Oblique,
+    Ligatures = TeX]{CMU Sans Serif}
+
+\setmonofont[
+    Path = ../Fonts/cm-unicode-0.7.0/,
+    Extension = .ttf,
+    UprightFont = * Regular,
+    ItalicFont = * Italic,
+    BoldFont = * Bold,
+    BoldItalicFont = * Bold Italic,
+    Ligatures = TeX]{CMU Typewriter Text}
+
+\newfontfamily\upit[
+    Path = ../Fonts/cm-unicode-0.7.0/,
+    Extension = .ttf,
+    UprightFont = *,
+    Ligatures = TeX]{CMU Serif Upright Italic}
+
+\newfontfamily\conc[
+    Path = ../Fonts/cm-unicode-0.7.0/,
+    Extension = .ttf,
+    UprightFont = * Roman,
+    ItalicFont = * Italic,
+    BoldFont = * Bold Extended Roman,
+    BoldItalicFont = * Bold Extended Italic,
+    Ligatures = TeX]{CMU Concrete}
+    
+\newfontfamily\amer[
+    Path = ../Fonts/A. Gophmann/,
+    Extension = .ttf,
+    UprightFont = *,
+    Ligatures = TeX]{American Retro}
+
+%----
+
+\usepackage{polyglossia}
+
+\setdefaultlanguage{russian}
+\setotherlanguage{english}
+
+%----
+
+\newcommand\BackgroundPic{%
+    \put(0,0){%
+        \parbox[b][\paperheight]{\paperwidth}{%
+            \centering{%
+                \makebox[0pt]{%
+                    \pgfsetfillopacity{0.05}%
+                    \includegraphics[trim = 0mm 0mm 0mm 0mm, % l b r t
+                                     clip, % for trim
+                                     height=\paperheight]{Images/Drops}}%
+                    \pgfsetfillopacity{1.0}
+            }
+        }
+    }
+}
+
+%----
+
+\usepackage{caption}
+
+\captionsetup[figure]{position=bottom, font=small, skip=18pt}
+
+\captionsetup[table]{position=top, font=small, skip=8pt}
+
+\captionsetup[lstlisting]{position=top, font=small, skip=8pt}
+
+\setlength{\belowcaptionskip}{1.5ex} % space between caption and text
+
+%----
+
+\setlength{\intextsep}{5.0ex plus 0.5ex minus 0.5ex}    % between float and text if [h]
+\setlength{\textfloatsep}{5.0ex plus 0.5ex minus 0.5ex} % between float and text if not [h]
+\setlength{\floatsep}{5.0ex plus 0.5ex minus 0.5ex}     % between floats
+
+%----
+
+\usepackage{array, ragged2e}
+
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
+
+\renewcommand{\arraystretch}{1.25}
+
+\newcommand{\cen}[1]{\Centering #1}
+
+%----
+
+\usepackage{longtable}
+
+%----
+
+\usepackage{hyperref}
+
+\hypersetup{
+    unicode,
+    pdfdisplaydoctitle,
+    pdftitle={---},
+    pdfauthor={Me},
+    colorlinks=true
+}
+
+%----
+
+\usepackage{bookmark}
+
+\bookmarksetup{
+    open,
+    openlevel=2,
+    depth=4,
+    numbered,
+    addtohook={%
+        \ifnum\bookmarkget{level}=1
+            \bookmarksetup{bold,color=Dark}%
+        \fi
+        \ifnum\bookmarkget{level}=2
+            \bookmarksetup{italic,bold,color=Medium}%
+        \fi
+        \ifnum\bookmarkget{level}=3
+            \bookmarksetup{color=Light}%
+        \fi
+        \ifnum\bookmarkget{level}=4
+            \bookmarksetup{italic,color=Medium}%
+        \fi
+    }
+}
+
+%----
+
+\definecolor{Dark}{HTML}{00A3E3}
+\definecolor{Medium}{HTML}{F9281D}
+\definecolor{Light}{HTML}{00B3AD}
+
+%----
+
+\usepackage[explicit]{titlesec}
+
+\renewcommand{\thesection}{}
+\renewcommand{\thesubsection}{\arabic{subsection}.}
+\renewcommand{\thesubsubsection}{}
+
+\titleformat{\section}{\Huge\amer\color{Dark}}{\thesection}{0.0em}{#1}
+\titleformat{\subsection}{\large\sffamily\bfseries\color{Medium}}{\thesubsection}{0.5em}{#1}
+\titleformat{\subsubsection}{\sffamily\bfseries\color{Light}}{\thesubsubsection}{0.0em}{#1}
+
+\titleformat{\paragraph}[hang]{\sffamily\color{Medium}}{\theparagraph}{0.0em}{#1}
+\titlespacing*{\paragraph}{0pt}{1.5ex plus 0.5ex minus 0.2ex}{-0.0ex}
+
+\titleformat{\subparagraph}[hang]{\sffamily\itshape\color{Light}}{\thesubparagraph}{0.0em}{#1}
+\titlespacing*{\subparagraph}{0pt}{0.0ex plus 0.1ex minus 0.1ex}{-0.5ex}
+
+%----
+
+\usepackage[nottoc]{tocbibind}
+
+%----
+
+\usepackage{tocloft}
+
+\setcounter{tocdepth}{1}
+
+\cftsetindents{section}{0.0em}{0.0em}
+\cftsetindents{subsection}{2.4em}{1.2em}
+\cftsetindents{subsubsection}{4.8em}{2.0em} % {<entry>}{<indent>}{<numwidth>}
+
+\renewcommand\cfttoctitlefont{\Huge\amer\color{Dark}}
+
+\renewcommand\cftaftertoctitleskip{4.0ex}
+
+\renewcommand\cftsecafterpnum{\vspace{1.0ex}}
+\renewcommand\cftsubsecafterpnum{\vspace{0.5ex}}
+\renewcommand\cftsubsubsecafterpnum{\vspace{0.5ex}}
+
+\renewcommand\cftsecfont{\normalfont}
+\renewcommand\cftsubsecfont{\normalfont}
+\renewcommand\cftsubsubsecfont{\normalfont}
+
+\renewcommand\cftsecpagefont{\normalfont\color{Medium}}
+\renewcommand\cftsubsecpagefont{\normalfont\color{Medium}}
+\renewcommand\cftsubsubsecpagefont{\normalfont\color{Medium}}
+
+\renewcommand\cftsecdotsep{\cftdotsep}
+
+\renewcommand\cftsecleader{\normalsize\color{Medium}\cftdotfill{\cftsecdotsep}}
+\renewcommand\cftsubsecleader{\normalsize\color{Medium}\cftdotfill{\cftsubsecdotsep}}
+\renewcommand\cftsubsubsecleader{\normalsize\color{Medium}\cftdotfill{\cftsubsubsecdotsep}}
+
+%----
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[R]{\mdseries\small\thepage}
+\renewcommand{\headrulewidth}{0pt}
+
+\fancypagestyle{plain}{% redefine 'plain' pagestyle (for roman-numbered pages)
+    \fancyhf{} % clear all header and footer fields
+    \fancyfoot[L]{\mdseries\small\thepage} % except the center
+    \renewcommand{\headrulewidth}{0pt}
+}
+
+%----
+
+\usepackage{pgfplots}
+
+\pgfplotsset{compat=1.14}
+
+%----
+
+\usetikzlibrary{arrows.meta}
+
+%----
+
+\usepgfplotslibrary{fillbetween}
+
+%----
+
+\usetikzlibrary{calc}
+
+\def\centerarc[#1](#2)(#3:#4:#5)% Syntax: [draw options] (center) (initial angle:final angle:radius)
+    {\draw[#1] ($(#2)+({#5*cos(#3)},{#5*sin(#3)})$) arc (#3:#4:#5);}
+
+%----
+
+\usepackage{placeins}
+
+%----
+
+\renewcommand\labelitemi{{\color{Light}$\bullet$}}
+\renewcommand\labelitemii{{\color{Medium}$\bullet$}}
+
+%----
+
+\usepackage{icomma}
+
+\usepackage{siunitx}
+
+\sisetup{output-decimal-marker={,}}
+
+\usepackage{xfrac}
+
+\usepackage{commath}
+
+%----
+
+\newcommand{\key}[1]{{\bfseries\color{Medium} #1}}
+%\newcommand{\key}[1]{{\color{Medium}\textbf{#1}}}
+
+\newcommand{\note}{{\bfseries\color{Dark} {\Large !} Замечание: \newline}}
+
+%----end of preambula----
+
+\begin{document}
+    \pgfsetfillopacity{0.05}
+    \AddToShipoutPicture{\BackgroundPic}
+    \pgfsetfillopacity{1.0}
+    
+    %\pagenumbering{gobble}
+    
+    \disablehyphenation
+
+    \raggedright
+
+    \section{Теория вероятностей}
+
+        \subsection{Основные понятия}
+
+            \subsubsection{Предмет изучения}
+
+                \key{Теория вероятностей} --- математическая наука, изучающая закономерности в случайных явлениях.
+
+                \key{Событие} --- любой факт, который в результате опыта может произойти или не произойти.
+
+                \key{Вероятность события} --- число, характеризующее степень объективной возможности появления этого события.
+
+            \subsubsection{Теоретико-множественный подход}
+
+                \key{Теоретико-множественный} подход к построению теории вероятностей --- современный аксиоматический подход, опирающийся на элементарные понятия теории множеств.
+
+                \key{Пространство элементарных событий \boldmath$\Omega$} --- множество всех возможных исходов некоторого опыта со случайным исходом:
+
+                \key{Элементарное событие \boldmath$\omega$} --- каждый элемент множества всех возможных исходов некоторого опыта со случайным исходом:
+                %
+                \begin{equation*}
+                    \omega \in \Omega .
+                \end{equation*}
+                %                
+                \key{Событие \boldmath$A$} --- некоторое подмножество множества всех возможных исходов некоторого опыта со случайным исходом:
+                %
+                \begin{equation*}
+                    A \in \Omega .
+                \end{equation*}
+                %
+                \key{Достоверное} событие --- которое происходит в каждом опыте.
+
+                \key{Невозможное} событие --- которое в результате опыта произойти не может.
+
+                \key{Несовместные} события --- которые в одном опыте не могут произойти одновременно.
+
+                \key{Сумма (объединение)} двух событий $A$ и $B$ ($A + B$, $A \cup B$) --- такое событие, которое заключается в том, что происходит хотя бы одно из событий, то есть или $A$, или $B$, или оба одновременно.
+
+                \key{Произведение (пересечение)} двух событий $A$ и $B$ ($A \cdot B$, $A \cap B$) --- такое событие, которое заключается в том, что происходят оба события $A$ и $B$ вместе.
+
+                \key{Противоположное} к событию $A$ --- такое событие, которое заключается в том, что событие $A$ не происходит.
+
+                \key{Полную группу} образуют события $A_k , \: k = 1 , \: 2 , \: \ldots , \: n$, если они попарно несовместны и в сумме образуют достоверное событие.
+
+            \subsubsection{Тождества}
+
+                \begin{equation*}
+                    \begin{aligned}
+                        & A + \nix{A} = \Omega ; \qquad
+                            && A \cdot \nix{A} = \none ; \\[1.0ex]
+                        & A + \Omega = \Omega ; \qquad
+                            && A \cdot \Omega = A ; \\[1.0ex]
+                        & A + \none = A ; \qquad
+                            && A \cdot \none = \none ; \\[1.0ex]
+                        & \nixx{A + B} = \nix{A} \cdot \nix{B} ; \qquad
+                            && \nixx{A \cdot B} = \nix{A} + \nix{B} ; \\[1.0ex]
+                        & A + \nix{A} \cdot B = A + B .
+                    \end{aligned}
+                \end{equation*}
+
+            \subsubsection{Аксиомы}
+
+                Пусть каждому событию $A$ ставится в соответствие число $P(A)$, называемое вероятностью события. Так как событие есть множество, то вероятность события есть функция множества. Вероятности событий удовлетворяют следующим аксиомам:
+                \begin{enumerate}
+                    \item Вероятность любого события заключена между нулем и единицей:
+                        %
+                        \begin{equation*}
+                            0 \leqslant P(A) \leqslant 1 .
+                        \end{equation*}
+                        %
+                    \item Если $A$ и $B$ несовместные события, то
+                        %
+                        \begin{equation*}
+                            P(A + B) = P(A) + P(B) .
+                        \end{equation*}
+                        %
+                        Эта аксиома обобщается на любое количество событий, если все они попарно несовместны.
+                \end{enumerate}
+
+            \subsubsection{Случаи}
+
+                \key{Равновозможными} называются события $A_1 , \: A_2 , \: \ldots , \: A_n$ такие, что
+                %
+                \begin{equation*}
+                    P(A_1) = P(A_2) = \ldots = P(A_n) .
+                \end{equation*}
+                
+                Если в каком-то опыте пространство элементарных событий $\Omega$ можно представить в виде полной группы несовместных и равновозможных событий $\omega_1 , \: \omega_2 , \: \ldots , \: \omega_n$, то такие события называются \key{случаями}, а сам опыт сводится к \key{схеме случаев}.
+
+                Случай $\omega_i$ называется благоприятным событию $A$, если он является элементом множества $A$:
+                %
+                \begin{equation*}
+                    \omega_i \in A .
+                \end{equation*}
+
+            \subsubsection{Определения вероятности}
+
+                \key{Классическое определение вероятности:} \newline                
+                вероятность события определяется по формуле
+                %
+                \begin{equation*}
+                    P(A) = \frac{m}{n} ,
+                \end{equation*}
+                %
+                где \newline
+                $n$ --- число элементарных равновозможных исходов данного опыта; \newline
+                $m$ --- число равновозможных исходов, приводящих к появлению события.
+
+                \key{Геометрическое определение вероятности:}
+
+                \begin{tikzpicture}
+                    \draw [gray!12!white, line width=4pt, fill=white, fill opacity=0.75]
+                        (0.0, 0.0) ellipse (3.0cm and 1.5cm);
+                    \draw [yellow!95!red, line width=4pt, fill=yellow, fill opacity=0.5]
+                        (-0.8, 0.0) ellipse (1.5cm and 0.85cm);
+                    \filldraw [Medium] (1.05, 0.45) circle (2pt)
+                        node [anchor=south west] {$T$};
+                    \node [Medium] at (1.8, 0.0) {$\Omega$};
+                    \node [Medium] at (-0.8, 0.0) {$A$};
+                \end{tikzpicture}
+
+                Пусть в некоторую область $\Omega$ случайным образом бросается точка $T$, причем все точки области равноправны в отношении попадания точки $T$. Тогда за вероятность попадания точки $T$ в область $A$ принимается отношение
+                %
+                \begin{equation*}
+                    P(A) = \frac{S(A)}{S(\Omega)} ,
+                \end{equation*}
+                %
+                где $S(A)$ и $S(\Omega)$ --- геометрические меры областей $A$ и $\Omega$ соответственно.
+
+            \subsubsection{Выборки}
+
+                Пусть имеется множество $X = \{ x_1 , \: x_2 , \: \ldots , \: x_n \}$, состоящее из $n$ различных элементов.
+
+                \key{\boldmath$(n, \: r)$-выборка} --- множество, состоящее из $r$ элементов, взятых из множества $X$.
+
+                \key{Упорядоченная} выборка --- для которой важен порядок следования элементов.
+
+                Выборка \key{с повторениями} --- если каждый элемент множества $X$ может извлекаться несколько раз.
+
+                \key{Перестановка} --- упорядоченная $(n, \: r)$-выборка.
+
+                \key{Сочетание} --- неупорядоченная $(n, \: r)$-выборка.
+
+            \subsubsection{Основные комбинаторные формулы}
+
+                Число перестановок с повторениями $\rep{P}^r_n$ равно
+                %
+                \begin{equation*}
+                    \rep{P}^r_n = n^r ,
+                \end{equation*}
+                
+                Число перестановок без повторений $P^r_n$ равно
+                %
+                \begin{equation*}
+                    P^r_n = \frac{n!}{(n - r)!} ,
+                \end{equation*}
+
+                Число сочетаний с повторениями $\rep{C}^r_n$ равно
+                %
+                \begin{equation*}
+                    \rep{C}^r_n = \frac{(n + r - 1)!}{r! (n - r)!} ,
+                \end{equation*}
+
+                Число сочетаний без повторений $C^r_n$ равно
+                %
+                \begin{equation*}
+                    C^r_n = \frac{n!}{r! (n - r)!} ,
+                \end{equation*}
+
+                Число различных \key{разбиений} множества из $n$ элементов на $k$ непересекающихся подмножеств, причем в 1-м подмножестве $r_1$ элементов, во 2-м --- $r_2$ элементов и так далее, а $n = равно r_1 , \: r_2 , \: \ldots , \: r_n $:
+                %
+                \begin{equation*}
+                    P_n(r_1 , \: r_2 , \: \ldots , r_n) = \frac{n!}{r_1! r_2! \ldots r_n!} ,
+                \end{equation*}
+
+        \newpage
+        
+        \subsection{Основные теоремы}
+
+            \subsubsection{Правило сложения вероятностей}
+
+                Если имеется счётное множество несовместных событий $A_1 , \: A_2 , \: \ldots , \: A_n$, то
+                %
+                \begin{equation*}
+                    P \left( \bigcup^{n}_{i = 1} A \right) = P \sum\limits_{i = 1}^{n} (A_i) .
+                \end{equation*}
+
+                Из правила сложения вероятностей вытекает, что если события $A_1 , \: A_2 , \: \ldots , \: A_n$ несовместны и образуют полную группу, то сумма их вероятностей равна единице. То есть если
+                %
+                \begin{equation*}
+                    \sum\limits_{i = 1}^{n} (A_i) = \Omega , \quad
+                        A_i \cdot A_j = \none, \: i \neq j ,
+                \end{equation*}
+                %
+                то
+                %
+                \begin{equation*}
+                    P \left( \sum\limits_{i = 1}^{n} A \right) =
+                        P \sum\limits_{i = 1}^{n} (A_i) = P(\Omega) = 1 .
+                \end{equation*}
+
+                В частности, если два события $A$ и $\nix{A}$ противоположны, то они образуют полную группу несовместных событий и
+                %
+                \begin{equation*}
+                    P(A) + P(\nix{A}) = 1 .
+                \end{equation*}
+
+                Тогда
+                %
+                \begin{equation*}
+                    P(A) = 1 - P(\nix{A}) .
+                \end{equation*}
+
+                Вероятность суммы двух совместных событий равна сумме вероятностей каждого из событий минус вероятность их совместного появления:
+                %
+                \begin{equation*}
+                    P(A \cup B) = P(A) + P(B) - P(A \cap B) .
+                \end{equation*}
+
+                Вероятность суммы трёх совместных событий:
+                %
+                \begin{equation*}
+                    \begin{aligned}
+                        P (A \cup B \cup C) = &~ P(A) + P(B) + P(C) \\[1.0ex]
+                        & - P(A \cap B) - P(B \cap C) - P(A \cap C) \\[1.0ex]
+                        & + P(A \cap B \cap C) .
+                    \end{aligned}
+                \end{equation*}
+
+            \subsubsection{Условная вероятность}
+
+                Событие $B$ называется \key{независимым от} события $A$, если возможность наступления события $B$ не зависит от того, произошло событие $A$ или нет, то есть:
+                %
+                \begin{equation*}
+                    P(B | A) = P(B) .
+                \end{equation*}
+
+                В противном случае события являются \key{зависимыми}.
+
+                \key{Условной вероятностью} события $B$ при наличии $A$ называется величина
+                %
+                \begin{equation*}
+                    P(B | A) = \frac{P(A \cap B)}{P(A)} , \quad P(A) \neq 0 .
+                \end{equation*}
+
+                Условную вероятность события $P(B | A)$ можно трактовать как вероятность события $B$, вычисленную при условии, что событие $A$ произошло.
+
+            \subsubsection{Правило умножения вероятностей}
+
+                \key{Правило умножения вероятностей двух зависимых событий} \newline
+                Вероятность произведения (пересечения, совмещения) двух событий равна вероятности одного из них, умноженной на условную вероятность второго при наличии первого:
+                %
+                \begin{equation*}
+                    P(A \cap B) = P(A) P(B | A) = P(B) P(A | B) .
+                \end{equation*}
+
+                Для независимых событий правило произведения вероятностей принимает вид
+                %
+                \begin{equation*}
+                    P(A \cap B) = P(A) P(B) .
+                \end{equation*}
+
+                Несколько событий $A_1 , \: A_2 , \: \ldots , \: A_n$ называются \key{независимыми}, если любое из них не зависит от любой комбинации (произведения) любого числа других.
+                
+                \key{Правило умножения вероятностей независимых событий:} \newline
+                вероятность произведения нескольких независимых событий равна произведению вероятностей этих событий:
+                %
+                \begin{equation*}
+                    P(A_1 \cap A_2 \cap \ldots \cap A_n) =
+                        P(A_1) \cdot P(A_2) \cdot \ldots \cdot P(A_n) ,
+                \end{equation*}
+                %
+                или
+                %
+                \begin{equation*}
+                    P \left( \prod\limits_{i = 1}^{n} A_i \right) = \prod\limits_{i = 1}^{n} P(A_i) .
+                \end{equation*}
+
+                \note
+                если имеется несколько событий $A_1 , \: A_2 , \: \ldots , \: A_n$, то их попарная независимость (независимость любых двух событий $A_i \text{ и } A_j , \: i \neq j$) ещё не означает их независимости в совокупности.
+
+            \subsubsection{Формула полной вероятности}
+
+                Формула полной вероятности является следствием основных правил теории вероятностей: теорем сложения и умножения вероятностей.
+
+                Допустим, что проводится некоторый опыт, об условиях которого можно сделать $n$ исключающих друг друга предположений --- \key{гипотез}:
+                %
+                \begin{equation*}
+                    \{ H_1 , \: H_2 , \: \ldots , \: H_n \} , \quad H_i \neq H_j , \: i \neq j .
+                \end{equation*}
+
+                Каждая гипотеза осуществляется случайным образом и представляет собой некоторые события, вероятности которых известны:
+                %
+                \begin{equation*}
+                    P(H_1) ; \: P(H_2) ; \: \ldots ; \: P(H_n) .
+                \end{equation*}
+
+                Рассматривается некоторое событие $A$, которое может появиться только совместно с одной из гипотез.
+                
+                Заданы условные вероятности события $A$ при каждой из гипотез:
+                %
+                \begin{equation*}
+                    P(A | H_1) ; \: P(A | H_2) ; \: \ldots ; \: P(A | H_n) .
+                \end{equation*}
+
+                Требуется найти вероятность события $A$.
+                
+                Для этого представим событие $A$ как сумму $n$ несовместных событий:
+                %
+                \begin{equation*}
+                    A = (A \cap H_1) \cup (A \cap H_2) \cup \ldots \cup (A \cap H_n) .
+                \end{equation*}
+
+                По правилу сложения вероятностей
+                %
+                \begin{equation*}
+                    P(A) = \sum\limits_{i = 1}^{n} P(H_i \cap A) .
+                \end{equation*}
+
+                По правилу умножения вероятностей
+                %
+                \begin{equation*}
+                    P(H_i \cap A) = P(H_i) P(A | H_i) .
+                \end{equation*}
+
+                Теперь можно найти полную вероятность события $A$.
+
+                \key{Формула полной вероятности} события $A$:
+                %
+                \begin{equation*}
+                    P(A) = \sum\limits_{i = 1}^{n} P(H_i) P(A | H_i) ,
+                \end{equation*}
+                %
+                то есть полная вероятность события $A$ вычисляется как сумма произведений вероятности каждой гипотезы на условную вероятность события при этой гипотезе.
+
+                Формула полной вероятности применяется в тех случая, когда опыт со случайным исходом распадается на два этапа: на первом разыгрываются условия опыта, а на втором --- его результаты.
+
+            \subsubsection{Формула Байеса}
+                
+                Следствием правила умножения и формулы полной вероятности является \key{теорема гипотез}, или \key{формула Байеса}.
+
+                По условиям опыта известно, что гипотезы $H_1 , \: H_2 , \: \ldots , \: H_n$ несовместны и образуют полную группу событий:
+                %
+                \begin{equation*}
+                    \begin{cases}
+                        H_i \cap H_j = \none, \: i \neq j ; \\[1.0ex]
+                        H_1 \cup H_2 \cup \ldots \cup H_n = \Omega .
+                    \end{cases}
+                \end{equation*}
+
+                Вероятности гипотез до опыта --- \key{априорные вероятности} --- известны
+                %
+                \begin{equation*}
+                    P(H_1) ; \: P(H_2) ; \: \ldots ; \: P(H_n)
+                \end{equation*}
+                %
+                и равны
+                %
+                \begin{equation*}
+                    \sum\limits_{i = 1}^{n} P(H_i) = 1 .
+                \end{equation*}
+
+                Предположим, что опыт произведен и в результате появилось событие $A$.
+                
+                Спрашивается, как нужно пересмотреть вероятность гипотез с учетом этого факта, или, другими словами, какова вероятность того, что наступлению события $A$ предшествовала гипотеза (\key{апостериорные вероятности} --- послеопытные):
+                %
+                \begin{equation*}
+                    P(H_1 | A) ; \: P(H_2 | A) ; \: \ldots ; \: P(H_n | A) .
+                \end{equation*}
+
+                Вероятность наступления события $A$ совместно с гипотезой $H_k$ определяется с использованием теоремы умножения вероятностей:
+                %
+                \begin{equation*}
+                    P(A \cap H_k) = P(H_k) P(A | H_k) = P(A) P(H_k | A) .
+                \end{equation*}
+
+                Таким образом, можно записать:
+                %
+                \begin{equation*}
+                    P(H_k | A) = \frac{P(H_k) P(A | H_k)}{P(A)} .
+                \end{equation*}
+
+                С формулой полной вероятности получаем \key{формулу Байеса}:
+                %
+                \begin{equation*}
+                    P(H_k | A) =
+                        \frac{P(H_k) P(A | H_k)}{\sum\limits_{i = 1}^{n} P(H_i) P(A | H_i)} .
+                \end{equation*}
+
+                Формула Байеса позволяет пересчитывать вероятности гипотез в свете новой информации, состоящей в том, что опыт дал результат $A$.
+
+            \subsubsection{Теоремы о повторении опытов}
+
+                Несколько опытов называются \key{независимыми}, если вероятность исхода опыта не зависит от того, какие исходы имели другие опыты.
+                
+                Рассмотрим случай, когда вероятности исходов опытов постоянны и не зависят от номера опыта.
+                
+                Пусть один тот же опыт проводятся $n$ раз. В каждом опыте некоторые события $A_1 , \: A_2 , \: \ldots , \: A_r$ появляется с вероятностями $p_1 , \: p_2 , \: \ldots , \: p_r$ .
+                
+                Будем рассматривать не результат каждого конкретного опыта, а общее число появлений событий $A_1 , \: A_2 , \: \ldots , \: A_r$.
+
+                \paragraph{Формула Бернулли}
+
+                    Рассмотрим случай с двумя возможными исходами опытов, то есть в результате каждого опыта событие $A$ появляется с вероятностью $p$ и не появляется с вероятностью $q = 1 - p$.
+
+                    Вероятность $P(n, \: k)$ того, что в последовательности из $n$ опытов интересующее нас событие произойдет ровно $k$ раз (безразлично, в какой последовательности), по \key{формуле Бернулли} равна
+                    %
+                    \begin{equation*}
+                        P_n(k) = C_n^k p^k q^{n - k} = \frac{n!}{k!(n - k)!} p^k q^{n - k} .
+                    \end{equation*}
+
+                    Докажем это.
+                    
+                    Обозначим через $B_k$ появление события $A$ в $k$ опытах и появление $\nix{A}$ в $(n - k)$ опытах.
+                    
+                    Событие $B_k$ представляет собой сумму несовместимых событий
+                    %
+                    \begin{equation*}
+                        \begin{aligned}
+                            B_k = &~ \underbrace{A_1 \cdot A_2 \cdot \ldots
+                                \cdot A_k}_{\text{\small $k$}} \cdot
+                                \underbrace{\nix{A}_{k + 1} \cdot \nix{A}_{k + 2} \cdot \ldots
+                                \cdot \nix{A}_n}_{\text{\small $n - k$}} \\[0.0ex]
+                            & + \ldots \\[2.0ex]
+                            & + \underbrace{\nix{A}_1 \cdot \nix{A}_2 \cdot \ldots
+                                \cdot \nix{A}_{n - k}}_{\text{\small $n - k$}} \cdot
+                                \underbrace{\nix{A}_{n - k + 1} \cdot \nix{A}_{n - k + 2} \cdot \ldots
+                                \cdot \nix{A}_n}_{\text{\small $k$}} \:\: ,
+                        \end{aligned}
+                    \end{equation*}
+                    %
+                    где $A_i$ --- появление события $A$ в $i$-том опыте.
+
+                    Определим вероятность одного из вариантов серии испытаний.
+                    
+                    Так как все опыты одинаковы, то вероятности всех вариантов одинаковы равны
+                    %
+                    \begin{equation*}
+                        \begin{aligned}
+                            & P(A_1 \cdot A_2 \cdot \ldots \cdot A_k \cdot
+                                \nix{A}_{k + 1} \cdot \nix{A}_{k + 2} \cdot \ldots
+                                \cdot \nix{A}_n) = \\[1.0ex]
+                            & \underbrace{p \cdot p \cdot \ldots \cdot
+                                p}_{\text{\small $k$}} \cdot
+                                \underbrace{q \cdot q \cdot \ldots \cdot
+                                q}_{\text{\small $n - k$}} = \\[1.0ex]
+                            & p^k q^{n - k} .
+                        \end{aligned}
+                    \end{equation*}
+
+                    Количество вариантов таких сложных событий равно числу выборок $k$ номеров опытов из $n$ возможных, в которых произойдут события $A$, то есть равно $C_n^k$.
+                    
+                    Тогда, согласно правилу сложения вероятностей для несовместных событий, $P(B_k)$ равно
+                    %
+                    \begin{equation*}
+                        P_n(k) = P(n, \:k) = C_n^k p^k q^{n - k} . \qedd
+                    \end{equation*}
+
+                \paragraph{Следствия из формулы Бернулли}
+
+                    Вероятность того, что в $n$ опытах схемы Бернулли событие $A$ наступит
+
+                    \begin{itemize}
+                        \item ~\ldots~ менее $k$ раз:
+                            %
+                            \begin{equation*}
+                                P(n, \: < k) = P(n, \: 0) + P(n, \: 0) + \ldots + P(n, \: k - 1) =
+                                    \sum\limits_{i = 0}^{k - 1} P(n, \: i) .
+                            \end{equation*}
+
+                        \item ~\ldots~ более $k$ раз:
+                            %
+                            \begin{equation*}
+                                P(n, \: > k) = P(n, \: k + 1) + P(n, \: k + 2) + \ldots +
+                                    P(n, \: n) = \sum\limits_{i = k + 1}^{n} P(n, \: i) .
+                            \end{equation*}
+
+                        \item ~\ldots~ от $k_1$ до $k_2$ раз:
+                            %
+                            \begin{equation*}
+                                P(n, \: k_1 \sleq i \sleq k_2) = \sum\limits_{i = k_1}^{i = k_2} P(n, i) =
+                                    \sum\limits_{i = k_1}^{i = k_2} C_n^k p^k q^{n - k}.
+                            \end{equation*}
+
+                        \item ~\ldots~ хотя бы один раз:
+                            %
+                            \begin{equation*}
+                                P(n, \: \sgeq 1) = P_n(1 \sleq k \sleq n) = 1 - q^n.
+                            \end{equation*}
+                    \end{itemize}
+
+                    \key{Наивероятнейшее число \boldmath$k_0$} появления события $A$ --- число, которому соответствует максимальная биномиальная вероятность $P_n(k_0)$.
+
+                    При заданных $n$ и $p$ это число определяется неравенствами
+                    %
+                    \begin{equation*}
+                        n p - q \sleq k_0 \sleq n p + p .
+                    \end{equation*}
+
+                \paragraph{Случай с несколькими исходами опытов}
+
+                    Пусть производится серия из n независимых опытов, в результате каждого из которых может появиться одно из событий $A_1 , \: A_2 , \: \ldots , \: A_r$ с вероятностями $p_1 , \: p_2 , \: \ldots , \: p_r$ соответственно.
+
+                    Вероятность того, что в серии из $n$ опытов событие $A_1$ наступит ровно $k_1$ раз, событие $A_2$ --- $k_2$ раз, \ldots, событие $A_n$ --- $k_n$ раз ($k_1 + k_2 + \ldots + k_r = n$) равна
+                    %
+                    \begin{equation*}
+                        P(n, \: k_1 , \: \ldots , \: k_r) =
+                            \frac{(k_1 + \ldots + k_r)!}{k_1! \cdot \ldots! \cdot k_r!} \cdot
+                            p_1^{k_1} \cdot \ldots \cdot p_r^{k_r} .
+                    \end{equation*}
+
+                \paragraph{Предельные теоремы в схеме испытаний Бернулли}
+
+                    Вычисление вероятностей $P(n, \: k)$ при больших значениях $n$ по формуле Бернулли проблематично.
+                    
+                    Поэтому вычисление соответствующих вероятностей проводится с помощью приближенных формул.
+                    
+                    \subparagraph{Теорема Пуассона}
+
+                        \key{Теорема Пуассона} --- предельная теорема теории вероятностей о сходимости биномиального распределения к распределению Пуассона:
+
+                        Если $n \to \infty$ и $p \to 0$, так что $n p \to \lambda, \:\: 0 < \lambda < \infty$, то
+                        %
+                        \begin{equation*}
+                            P_n(k) \approx \frac{\lambda^k}{k!} \cdot e^{-\lambda}, \quad
+                                k = 0 , \: 1 , \: \ldots , \: n .
+                        \end{equation*}
+
+                    \subparagraph{Теоремы Муавра--Лапласа}
+
+                        На практике приближенные формулы Муавра--Лапласа применяются в случае, когда $p$ и $q$ не малы , а $n p q > 9$.
+
+                    \subparagraph{Локальная теорема Муавра--Лапласа}
+
+                        Если вероятность появления события $A$ в каждом из $n, \: n \to \infty$ независимых испытаний равна одной и той же постоянной $p = \const , \: 0 < p < 1$, то вероятность того, что во всех этих испытаниях событие $A$ появится ровно $k$ раз, приближенно вычисляется формулой
+                        %
+                        \begin{equation*}
+                            P(n, \: k) \approx \frac{1}{\sqrtt{n p q}} \cdot \varphi (x) ,
+                        \end{equation*}
+                        %
+                        где
+                        %
+                        \begin{equation*}
+                            x = \frac{k - n p}{\sqrtt{n p q}} ,
+                        \end{equation*}
+                        %
+                        а
+                        %
+                        \begin{equation*}
+                            \varphi (x) = \frac{1}{\sqrtt{2 \pi}} e^{-\frac{x^2}{2}}
+                        \end{equation*}
+                        %
+                        --- \key{кривая Гаусса}:
+
+                        \vspace{2.0ex}
+
+                        \begin{tikzpicture}
+                            \begin{axis}[samples=100, tick label style={font=\footnotesize}, xtick={0}, ytick={0}]
+                                \addplot [Medium, thick, domain=-4.001:4]
+                                    {e^(-(x^2))};
+                            \end{axis}
+                        \end{tikzpicture}
+
+                        Таблицы значений функции $\varphi (x)$ даны в приложениях к учебникам по теории вероятностей.
+
+                    \subparagraph{Интегральная теорема Муавра--Лапласа}
+
+                        Если вероятность появления события $A$ в каждом из $n, \: n \to \infty$ независимых испытаний равна одной и той же постоянной $p = \const , \: 0 < p < 1$, то вероятность того, что во всех этих испытаниях событие $A$ появится не менее $k_1$ и не более $k_2$ раз, приближенно вычисляется формулой
+                        %
+                        \begin{equation*}
+                            P(n, \: k_1 \sleq k \sleq k_2) \approx (\Phi (x_2) - \Phi (x_1)) ,
+                        \end{equation*}
+                        %
+                        где
+                        %
+                        \begin{equation*}
+                            \Phi (x) = \frac{2}{\sqrtt{2 \pi}}
+                                \int\limits_{0}^{x} e^{-\frac{x^\text{\tiny 2}}{2}} \dif x
+                        \end{equation*}
+                        %
+                        --- \key{функция Лапласа}:
+
+                        \vspace{2.0ex}
+
+                        \begin{tikzpicture}
+                            \begin{axis}[samples=100, tick label style={font=\footnotesize}, xtick={0}, ytick distance=0.5]
+                                \addplot [Medium, thick, domain=-8.001:0]
+                                    {0.5 * (1 - (1 - e^x))};
+                                \addplot [Medium, thick, domain=-0.001:8]
+                                    {0.5 * (1 + (1 - e^(-x)))};
+                            \end{axis}
+                        \end{tikzpicture}
+
+                        \begin{equation*}
+                            x_1 = \frac{k_1 - n p}{\sqrtt{n p q}} , \quad
+                                x_2 = \frac{k_2 - n p}{\sqrtt{n p q}} .
+                        \end{equation*}
+                        
+                        Значения аргументов функции Лапласа для $x \in [0, \: 5]$ даны в приложениях к учебникам по теории вероятностей, для $x > 5$ \:$\Phi (x) = 1$.
+
+        \newpage
+        
+        \subsection{Случайные величины}
+
+            \subsubsection{Определение случайной величины}
+
+                \key{Случайная величина (СВ)} --- величина, которая в результате опыта со случайным исходом принимает то или иное значение.
+                
+                \key{Множество \boldmath$\Xi$} --- множество возможных значений случайной величины.
+                
+                Обозначения случайной величины: $X$, $Y$, $Z$; \newline
+                обозначения возможных значений случайной величины: $x$, $y$, $z$.
+
+                В теоретико-множественной трактовке основных понятий теории вероятностей случайная величина $X$ есть функция элементарного события:
+                %
+                \begin{equation*}
+                    X = \varphi (\omega_i) ,
+                \end{equation*}
+                %
+                где $\omega_i$ --- элементарное событие, принадлежащее пространству $\Omega$.
+                
+                При этом множество $\Xi$ возможных значений СВ $X$ состоит из всех значений, которые принимает функция $\varphi (\omega)$.
+
+                \paragraph{Примеры}
+
+                    \begin{enumerate}
+                        \item Опыт --- бросание двух монет. Тогда $\Xi = \{ (\text{г}, \: \text{г}) , \: (\text{г}, \: \text{ц}) , \: (\text{ц}, \: \text{г}) , \: (\text{ц}, \: \text{ц}) \}$.
+                        
+                        Числовая функция $X$ (СВ $X$) --- число выпадений герба, определенная на множестве $\Xi = \{ 0, \: 1, \: 2 \}$ --- герб может выпасть $0, 1, 2$ раза.
+
+                        \item Опыт --- работа ЭВМ после ремонта, случайная величина $T$ --- время наработки на отказ.
+                        
+                        Множество возможных значений $\Xi$ --- теоретически вся правая половина оси абсцисс.
+                        
+                        Множество возможных значений для этого опыта несчётно.
+                    \end{enumerate}
+
+                \paragraph{Классификация случайных величин}
+
+                    В зависимости от вида множества $\Xi$ случайные величины могут быть дискретными и недискретными.
+                    
+                    \key{Дискретная СВ} --- если множество её возможных значений счётно или конечно.
+
+                    \key{Недискретная СВ} --- если множество её возможных значений несчётно.
+
+            \subsubsection{Закон распределения случайной величины}
+
+                \key{Закон распределения СВ} --- любое правило (таблица, функция), позволяющее находить вероятности всевозможных событий, связанных со случайной величиной.
+                
+                То есть закон распределения СВ --- это всякое соотношение, устанавливающее связь между возможными значениями СВ и их вероятностями.
+                
+                СВ будет полностью описана с вероятностной точки зрения, если мы зададим это распределение, то есть в точности укажем, какой вероятностью обладает каждое событие.
+                
+                Про случайную величину мы будем говорить, что она подчинена данному закону распределения.
+
+            \subsubsection{Ряд распределения дискретной случайной величины}
+
+                Наиболее простая форма закона распределения дискретной СВ --- ряд распределения.
+                
+                \key{Ряд распределения} дискретной СВ --- таблица, в которой перечислены в порядке возрастания все возможные значения случайной величины $X$: $x_1 , \: x_2 , \: \ldots , \: x_n , \: \ldots$ и вероятности этих значений $p_1 , \: p_2 , \: \ldots , \: p_n , \: \ldots$, где $p_i = P(X = x_i)$ --- вероятность того, что в результате опыта СВ $X$ примет значение $x_i$ \:$(i = 1 , \: 2 , \: \ldots , \: n , \: \ldots)$.
+
+                Ряд распределения записывается в виде таблицы:
+
+                \begin{tabular}{*{6}{|C{1.8cm}}|}
+                    \hline
+                    $X$ & $x_1$ & $x_2$ & $\ldots$ & $x_n$ & $\ldots$ \\
+                    \hline
+                    $P$ & $p_1$ & $p_2$ & $\ldots$ & $p_n$ & $\ldots$ \\
+                    \hline
+                \end{tabular}
+
+                Так как события $(X = x_1) , \: (X = x_2) , \: \ldots$ несовместны и образуют полную группу, то сумма всех вероятностей, стоящих в нижней строке, равна единице:
+                %
+                \begin{equation*}
+                    \sum\limits_{i} P(X = x_i) = 1 .
+                \end{equation*}
+
+                \paragraph{Многоугольник распределения}
+
+                    \key{Многоугольник распределения} --- графическое изображение ряда вероятностей: по оси абсцисс откладываются возможные значения СВ, а по оси ординат --- вероятности этих значений. Для наглядности полученные точки соединяются отрезками прямых.
+                    
+                    Многоугольник распределения, так же как и ряд распределения, полностью характеризует СВ и является одной из форм закона распределения.
+
+            \subsubsection{Функция распределения случайной величины}
+
+                Наиболее общая форма закона распределения, пригодная для всех случайных величин (как дискретных, так и недискретных) --- функция распределения.
+                
+                Функция распределения СВ $X$ --- вероятность того, что она примет значение меньшее, чем аргумент функции $x$: $F(x) = P(X < x)$.
+                
+                Геометрически функция распределения интерпретируется как вероятность того, что случайная точка $X$ попадет левее заданной точки $x$:
+
+                \begin{tikzpicture}
+                    \draw [{<[length=12pt, width=6pt]<[length=12pt, width=6pt]}-{>[length=12pt, width=6pt]}]
+                        (0, 1) --
+                        (3, 1) node [above] {$X < x$} --
+                        (6, 1);
+                    \fill[fill=Light, opacity=0.3]
+                        (0, 0)
+                        rectangle (6, 0.6);
+                    \draw [-{>[length=12pt, width=6pt]}, darkgray, thick]
+                        (0, 0) --
+                        (8, 0);
+                    \draw
+                        (6, 0) --
+                        (6, 1.2);
+                    \fill [fill=Medium]
+                        (6, 0)
+                        circle (2pt)
+                        node [anchor=north west] {$x$};
+                \end{tikzpicture}
+
+                Из геометрической интерпретации можно наглядно вывести основные свойства функции распределения.
+
+                \paragraph{Свойства функции распределения}
+
+                    \begin{enumerate}
+                        \item $\lim\limits_{n \to -\infty} F(x) = F(-\infty) = 0 .$
+                        \item $\lim\limits_{n \to +\infty} F(x) = F(+\infty) = 1 .$
+                        \item $F(x)$ --- неубывающая функция своего аргумента, то есть при $x_1 < x_2$ \:$F(x_1) \sleq F(x_2)$.
+                        \item $P(\alpha \sleq X < \beta) = F(\beta) - F(\alpha) , \quad \forall \: \alpha , \: \beta \in \mathbb{R}$.
+                    \end{enumerate}
+
+                    Доказательство свойства 3 --- на рисунке:
+
+                    \begin{tikzpicture}
+                        \draw [{<[length=12pt, width=6pt]<[length=12pt, width=6pt]}-{>[length=12pt, width=6pt]}]
+                            (0, 1) --
+                            (3, 1) node [above] {$A$} --
+                            (6, 1);
+                        \draw [{<[length=12pt, width=6pt]}-{>[length=12pt, width=6pt]}]
+                            (6, 1) --
+                            (7, 1) node [above] {$B$} --
+                            (8, 1);
+                        \draw [{<[length=12pt, width=6pt]<[length=12pt, width=6pt]}-{>[length=12pt, width=6pt]}]
+                            (0, -1) --
+                            (4, -1) node [below] {$C$} --
+                            (8, -1);
+                        \fill[fill=Light, opacity=0.3]
+                            (0, 0)
+                            rectangle (6, 0.6);
+                        \fill[fill=Dark, opacity=0.3]
+                            (0, 0)
+                            rectangle (8, -0.6);
+                        \draw [-{>[length=12pt, width=6pt]}, darkgray, thick]
+                            (0, 0) --
+                            (10, 0);
+                        \draw
+                            (6, 0) --
+                            (6, 1.2);
+                        \draw
+                            (8, -1.2) --
+                            (8, 1.2);
+                        \fill [fill=Medium]
+                            (6, 0)
+                            circle (2pt)
+                            node [anchor=south west] {$x_1$};
+                        \fill [fill=Medium]
+                            (8, 0)
+                            circle (2pt)
+                            node [anchor=south west] {$x_2$};
+                    \end{tikzpicture}
+
+                    Представим событие $C = (X < x_2)$ как сумму двух несовместных событий $C = A + B$, где $A = (X < x_1)$ и $B = (x_1 \sleq X < x_2)$.
+
+                    По правилу сложения вероятностей
+                    %
+                    \begin{equation*}
+                        P(C) = P(A) + P(B) ,
+                    \end{equation*}
+                    %
+                    то есть
+                    %
+                    \begin{equation*}
+                        P(X < x_2) = P(X < x_1) + P(x_1 \sleq X < x_2) ,
+                    \end{equation*}
+                    %
+                    или
+                    %
+                    \begin{equation*}
+                        F(x_2) = F(x_1) + P(x_1 \sleq X < x_2) .
+                    \end{equation*}
+                    
+                    Но $P(x_1 \sleq X < x_2) \sgeq 0$, следовательно, $F(x_2) \sleq F(x_1)$. \qedd
+
+                    Доказательство свойства 4 вытекает из доказательства свойства 3.
+
+                    Вероятность того, что случайная величина $X$ в результате опыта попадет на участок от $\alpha$ до $\beta$ (включая $\alpha$) равна приращению функции распределения на этом участке.
+                    
+                    Таким образом, функция распределения $F(x)$ любой СВ есть неубывающая функция своего аргумента, значения которой заключены между 0 и 1: \newline
+                    $0 \sleq F(x) \sleq 1$, причём $F(-\infty) = 0 , \: F(+\infty) = 1$.
+
+                \paragraph{Функция распределения дискретной случайной величины}
+
+                    Исходной информацией для построения функции распределения дискретной СВ $X$ является ряд распределения этой СВ:
+
+                    \begin{tabular}{*{5}{|C{1.6cm}}|C{2.8cm}|C{1.8cm}|}
+                        \hline
+                        $X$ & $x_1$ & $x_2$ & $x_3$ & $\ldots$ & $x_n$ & $> x_n$ \\
+                        \hline
+                        $P$ & $p_1$ & $p_2$ & $p_3$ & $\ldots$ & $p_n$ & $0$ \\
+                        \hline
+                        $F(x_1)$ & $0$ & $p_1$ & $p_1 + p_2$ & $\ldots$ &
+                            $p_1 + \ldots + p_{n - 1}$ & $1$ \\
+                        \hline
+                    \end{tabular}
+                    %
+                    \begin{equation*}
+                        \begin{aligned}
+                            F(x_i) = ~& P(X < x_i) = \\[1.0ex]
+                            & P \left( (X = x_1) \cup (X = x_2) \cup \ldots \cup
+                                (X = x_{i - 1}) \right) = \\[1.0ex]
+                            & p_1 + p_2 + \ldots + p_{i - 1} .
+                        \end{aligned}
+                    \end{equation*}
+
+                    $F(x) = \sum\limits_{x_i < x} P(X = x_i)$, то есть суммирование распространяется на все значения $x_i$, которые меньше $x$.
+
+                    Функция распределения любой дискретной СВ --- разрывная ступенчатая функция, скачки которой происходят в точках, соответствующих возможным значениям случайной величины, и равны вероятности этих значений:
+                    %
+                    \begin{equation*}
+                        F(x) = 
+                        \begin{cases}
+                            0 , \quad & x \sleq x_1 ; \\[1.0ex]
+                            p_1 , \quad & x_1 < x \sleq x_2 ; \\[1.0ex]
+                            p_1 + p_2 , \quad & x_2 < x \sleq x_3 ; \\[1.0ex]
+                            \ldots \\[1.0ex]
+                            p_1 + p_2 + \ldots + p_{n - 1} , \quad
+                                & x_{n - 1} < x \sleq x_n ; \\[1.0ex]
+                            1 , \quad & x > x_n .
+                        \end{cases}
+                    \end{equation*}
+
+                    Пример: СВ $X$ – количество гербов, выпавших при подбрасывании двух монет.
+                    
+                    СВ $X$ принимает значения $X = \{ 0, \: 1, \: 2 \}$.
+                    
+                    Вероятности этих значений: \newline
+                    $P(X = 0) = 0,25 ; \:\: P(X = 1) = 0,5 ; \:\: P(X = 2) = 0,25$.
+                    
+                    Тогда функция распределения этой случайной величины имеет вид:
+                    %
+                    \begin{equation*}
+                        F(x) = 
+                        \begin{cases}
+                            0 , \quad & x \sleq 0 ; \\[1.0ex]
+                            0,25 , \quad & 0 < x \sleq 1 ; \\[1.0ex]
+                            0,25 + 0,5 , \quad & 1 < x \sleq 2 ; \\[1.0ex]
+                            1 , \quad & x > 2 .
+                        \end{cases}
+                    \end{equation*}
+
+                    \begin{tikzpicture}
+                        \begin{axis}[samples=100, tick label style={font=\footnotesize}, xtick={0, 1, 2}, ytick distance=0.25]
+                            \addplot [Medium, thick, densely dotted, domain=-1.001:-0.8]
+                                {0};
+                            \addplot [Medium, thick, domain=-0.801:0]
+                                {0};
+                            \addplot [Medium, thick, {<[length=8pt, width=5pt]}-, domain=-0.001:1]
+                                {0.25};
+                            \addplot [Medium, thick, {<[length=8pt, width=5pt]}-, domain=1.001:2]
+                                {0.5};
+                            \addplot [Medium, thick, {<[length=8pt, width=5pt]}-, domain=2.001:2.8]
+                                {1};
+                            \addplot [Medium, thick, densely dotted, domain=2.801:3]
+                                {1};
+                            \draw [thin, dotted]
+                                (0, 0) -- (0, 1);
+                            \draw [thin, dotted]
+                                (1, 0) -- (1, 1);
+                            \draw [thin, dotted]
+                                (2, 0) -- (2, 1);
+                        \end{axis}
+                    \end{tikzpicture}
+
+            \subsubsection{Непрерывная случайная величина}
+
+                \key{Непрерывная СВ \boldmath$X$} --- если её функция распределения $F(x)$ --- непрерывная, кусочно-дифференцируемая, с непрерывной производной.
+                
+                Так как для таких случайных величин функция $F(x)$ нигде не имеет скачков, то вероятность любого отдельного значения непрерывной случайной величины равна нулю:
+                %
+                \begin{equation*}
+                    P(X = \alpha) = 0 , \quad \forall \: \alpha .
+                \end{equation*}
+
+            \subsubsection{Плотность распределения непрерывной случайной величины}
+
+                Плотность распределения (плотность вероятности) в качестве закона распределения имеет смысл только для непрерывных случайных величин.
+                
+                Вероятность попадания непрерывной СВ $X$ на участок $\text{от } x \text{ до } x + \Delta x$ равна приращению функции распределения на этом участке:
+                %
+                \begin{equation*}
+                    P(x \sleq X < x + \Delta x) = F(x + \Delta x) - F(x) .
+                \end{equation*}
+                
+                Плотность вероятности на этом участке определяется отношением
+                %
+                \begin{equation*}
+                    \begin{aligned}
+                        f(x) = ~& \lim\limits_{\Delta x \to 0}
+                            \frac{P(x \sleq X < x + \Delta x)}{\Delta x} = \\[1.0ex]
+                        & \lim\limits_{\Delta x \to 0}
+                            \frac{F(x + \Delta x) - F(x)}{\Delta x} = \\[1.0ex]
+                        & \frac{\dif F(x)}{\dif x} .
+                    \end{aligned}
+                \end{equation*}
+
+                \key{Плотность распределения (плотностью вероятности) \boldmath$f(x)$} непрерывной СВ $X$ в точке $x$ называется производная её функции распределения $F(x)$ в этой точке.
+                
+                \key{Кривая распределения} --- график плотности распределения.
+
+                Пусть имеется точка $x$ и прилегающий к ней отрезок $\dif x $.
+                
+                Вероятность попадания СВ $X$ на этот интервал равна $f(x) \dif x$. Эта величина --- \key{элемент вероятности}.
+                
+                Вероятность попадания случайной величины X на произвольный участок $[\alpha , \: \beta]$ равна сумме элементарных вероятностей на этом участке:
+                %
+                \begin{equation*}
+                    P(\alpha \sleq x < \beta) = \int\limits_{\alpha}^{\beta} f(x) \dif x .
+                \end{equation*}
+
+                В геометрической интерпретации $P(\alpha \sleq x < \beta)$ равна площади, ограниченной сверху кривой плотности распределения $f(x)$ и опирающейся на участок $[\alpha , \: \beta]$:
+
+                \begin{tikzpicture}
+                    \begin{axis}[samples=100, tick label style={font=\footnotesize}, xtick={0.5, 1.5}, xticklabels={$\alpha$, $\beta$}, ytick={0}]
+                        \addplot+ [name path=A, Medium, thick, domain=-3.001:3, no marks]
+                            {e^(-(x^2))};
+                        \path [name path=B]
+                            (\pgfkeysvalueof{/pgfplots/xmin}, 0) --
+                            (\pgfkeysvalueof{/pgfplots/xmax}, 0);
+                        \addplot [Light, fill opacity=0.3] fill between [of=A and B, soft clip={domain=0.5:1.5}];
+                    \end{axis}
+                \end{tikzpicture}
+
+                Это соотношение позволяет выразить функцию распределения $F(x)$ СВ $X$ через её плотность:
+                %
+                \begin{equation*}
+                    F(x) = \int\limits_{-\infty}^{x} f(x) \dif x .
+                \end{equation*}
+
+                В геометрической интерпретации $F(x)$ равна площади, ограниченной сверху кривой плотности распределения $f(x)$ и лежащей левее точки $x$:
+
+                \begin{tikzpicture}
+                    \begin{axis}[samples=100, tick label style={font=\footnotesize}, xtick={0.5}, xticklabels={$x$}, ytick={0}]
+                        \addplot+ [name path=A, Medium, thick, domain=-3.001:3, no marks]
+                            {e^(-(x^2))};
+                        \path [name path=B]
+                            (\pgfkeysvalueof{/pgfplots/xmin}, 0) --
+                            (\pgfkeysvalueof{/pgfplots/xmax}, 0);
+                        \addplot [Dark, fill opacity=0.3] fill between [of=A and B, soft clip={domain=-3:0.5}];
+                    \end{axis}
+                \end{tikzpicture}
+
+                \paragraph{Основные свойства плотности распределения}
+
+                    \begin{enumerate}
+                        \item Плотность распределения неотрицательна:
+                        %
+                        \begin{equation*}
+                            f(x) \sgeq 0 .
+                        \end{equation*}
+                        %
+                        Это свойство следует из определения $f(x)$ --- производная неубывающей функции не может быть отрицательной.
+
+                        \item \key{Условие нормировки}:
+                        %
+                        \begin{equation*}
+                            \int\limits_{-\infty}^{+\infty} f(x) \dif x = 1 .
+                        \end{equation*}
+                        %
+                        Это свойство следует из формулы выражения функции распределения СВ через её плотность, если положить в ней $x = +\infty$.
+                    \end{enumerate}
+
+                    Геометрическая интерпретация основных свойств плотности распределения $f(x)$ СВ:
+                    \begin{enumerate}
+                        \item Вся кривая распределения лежит не ниже оси абсцисс.
+                        \item Площадь, ограниченная кривой распределения и осью абсцисс, равна единице.
+                    \end{enumerate}
+
+\end{document}
