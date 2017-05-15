@@ -106,6 +106,8 @@
 
 \DeclareMathOperator{\const}{const}
 
+\DeclareMathOperator{\exp}{exp}
+
 \DeclareMathOperator{\cov}{Cov}
 
 \makeatletter
@@ -348,6 +350,8 @@
 \newcommand{\note}{{\color{Dark}\bfseries {\Large !} Замечание: \newline}}
 
 \newcommand{\prooff}{{\color{Dark}\bfseries Доказательство: \newline}}
+
+\newcommand{\theorr}{{\color{Medium}\bfseries Теорема: \newline}}
 
 %----end of preambula----
 
@@ -1029,7 +1033,7 @@
                     \hline
                     $X$ & $x_1$ & $x_2$ & $\ldots$ & $x_n$ & $\ldots$ \\
                     \hline
-                    $P $ & $p_1$ & $p_2$ & $\ldots$ & $p_n$ & $\ldots$ \\
+                    $P$ & $p_1$ & $p_2$ & $\ldots$ & $p_n$ & $\ldots$ \\
                     \hline
                 \end{tabular}
 
@@ -1058,8 +1062,7 @@
                 \begin{tikzpicture}
                     \draw [{<[length=12pt, width=6pt]<[length=12pt, width=6pt]}-{>[length=12pt, width=6pt]}]
                         (0, 1) --
-                        (3, 1) node [above] {$X < x$} --
-                        (6, 1);
+                        (6, 1) node [above] {$X < x$};
                     \fill[fill=Light, opacity=0.3]
                         (0, 0)
                         rectangle (6, 0.6);
@@ -1091,16 +1094,13 @@
                     \begin{tikzpicture}
                         \draw [{<[length=12pt, width=6pt]<[length=12pt, width=6pt]}-{>[length=12pt, width=6pt]}]
                             (0, 1) --
-                            (3, 1) node [above] {$A$} --
-                            (6, 1);
+                            (6, 1) node [above] {$A$};
                         \draw [{<[length=12pt, width=6pt]}-{>[length=12pt, width=6pt]}]
                             (6, 1) --
-                            (7, 1) node [above] {$B$} --
-                            (8, 1);
+                            (8, 1) node [above] {$B$};
                         \draw [{<[length=12pt, width=6pt]<[length=12pt, width=6pt]}-{>[length=12pt, width=6pt]}]
                             (0, -1) --
-                            (4, -1) node [below] {$C$} --
-                            (8, -1);
+                            (8, -1) node [below] {$C$};
                         \fill[fill=Light, opacity=0.3]
                             (0, 0)
                             rectangle (6, 0.6);
@@ -1163,7 +1163,7 @@
                         \hline
                         $X$ & $x_1$ & $x_2$ & $x_3$ & $\ldots$ & $x_n$ & $> x_n$ \\
                         \hline
-                        $P $ & $p_1$ & $p_2$ & $p_3$ & $\ldots$ & $p_n$ & $0$ \\
+                        $P$ & $p_1$ & $p_2$ & $p_3$ & $\ldots$ & $p_n$ & $0$ \\
                         \hline
                         $F(x_1)$ & $0$ & $p_1$ & $p_1 + p_2$ & $\ldots$ &
                             $p_1 + \ldots + p_{n - 1}$ & $1$ \\
@@ -1217,6 +1217,12 @@
 
                     \begin{tikzpicture}
                         \begin{axis}[samples=100, tick label style={font=\footnotesize}, xtick={0, 1, 2}, ytick distance=0.25]
+                            \draw [thin, dotted]
+                                (0, 0) -- (0, 1);
+                            \draw [thin, dotted]
+                                (1, 0) -- (1, 1);
+                            \draw [thin, dotted]
+                                (2, 0) -- (2, 1);
                             \addplot [Medium, thick, densely dotted, domain=-1.001:-0.8]
                                 {0};
                             \addplot [Medium, thick, domain=-0.801:0]
@@ -1229,12 +1235,6 @@
                                 {1};
                             \addplot [Medium, thick, densely dotted, domain=2.801:3]
                                 {1};
-                            \draw [thin, dotted]
-                                (0, 0) -- (0, 1);
-                            \draw [thin, dotted]
-                                (1, 0) -- (1, 1);
-                            \draw [thin, dotted]
-                                (2, 0) -- (2, 1);
                         \end{axis}
                     \end{tikzpicture}
 
@@ -1530,7 +1530,7 @@
                         & \sum\limits_{i = 1}^{n} x_i^2 p_i -
                             2 m_x \sum\limits_{i = 1}^{n} x_i p_i +
                             m_x^2 \sum\limits_{i = 1}^{n} p_i = \\[1.0ex]
-                        & \alpha_2 - m_x^2 .
+                        & \nu_2 - m_x^2 .
                     \end{aligned}
                 \end{equation*}
 
@@ -1544,7 +1544,7 @@
                             3 m_x \sum\limits_{i = 1}^{n} x_i^2 p_i +
                             3 m_x^2 \sum\limits_{i = 1}^{n} x_i p_i +
                             m_x^3 \sum\limits_{i = 1}^{n} p_i = \\[1.0ex]
-                        & \alpha_3 - 3 \alpha_2 m_x + 2 m_x^3 .
+                        & \nu_3 - 3 \nu_2 m_x + 2 m_x^3 .
                     \end{aligned}
                 \end{equation*}
 
@@ -1598,7 +1598,7 @@
 
                 \paragraph{Свойства дисперсии}
 
-                    \begin{enumerated}
+                    \begin{enumerate}
                         \item Дисперсия постоянной величины $c$ равна нулю:
                         %
                         \begin{equation*}
@@ -1653,7 +1653,7 @@
                         \begin{equation*}
                             \sigma [c X] = |c| \cdot \sigma [X] .
                         \end{equation*}
-                    \end{enumerated}
+                    \end{enumerate}
 
                     При $|c| > 1$ величина $c X$ имеет возможные значения (по абсолютной величине), большие, чем величина $X$. Следовательно, эти значения рассеяны вокруг математического ожидания $M[c X]$ больше, чем возможные значения $X$ вокруг $M[X]$, то есть $D[c X] > D[X]$.
                     
@@ -1686,8 +1686,8 @@
                     %
                     \begin{equation*}
                         \begin{aligned}
-                            \int\limits_{-\infty}^{M_e} f(x) \dif x &= 0,5 ; \\[1.0ex]
-                            \int\limits_{M_e}^{+\infty} f(x) \dif x &= 0,5 .
+                            \int\limits_{-\infty}^{M_e} f(x) \dif x & = 0,5 ; \\[1.0ex]
+                            \int\limits_{M_e}^{+\infty} f(x) \dif x & = 0,5 .
                         \end{aligned}
                     \end{equation*}
 
@@ -1867,5 +1867,635 @@
                 \end{equation*}
                 
                 И так далее, что позволяет выразить начальные моменты более высокого порядка.
+
+        \newpage
+
+        \subsection{Типовые распределения случайных величин}
+
+            \subsubsection{Типовые законы распределения дискретных случайных величин}
+
+                \paragraph{Геометрическое распределение}
+
+                    Дискретная случайная величина $X$ имеет \key{геометрическое распределение}, если вероятности её возможных значений $0 , \: 1 , \: \ldots , \: k , \: \ldots$ определяются так:
+                    %
+                    \begin{equation*}
+                        p_k = P(X = k) = q^k p ,
+                    \end{equation*}
+                    %
+                    где $p$ --- параметр распределения, ($0 \sleq p \sleq 1$), а $q = 1 - p$.
+
+                    \begin{tabular}{*{7}{|C{1.8cm}}|}
+                        \hline
+                        $x_i$ & 0 & 1 & 2 & $\ldots$ & $k$ & $\ldots$ \\
+                        \hline
+                        $p_i$ & $p$ & $q p$ & $q^2 p$ & $\ldots$ & $q^k p$ & $\ldots$ \\
+                        \hline
+                    \end{tabular}
+
+                    На практике геометрическое распределение появляется при следующих условиях:
+                    
+                    Пусть производится некоторый опыт, в котором некоторое событие появляется с вероятностью $p$. Опыты производятся последовательно, до наступления события.
+                    
+                    Случайная величина $X$, равная числу неудачных опытов, имеет геометрическое распределение.
+                    
+                    Числовые характеристики геометрического распределения:
+                    %
+                    \begin{equation*}
+                        \begin{aligned}
+                            M[X] & = \frac{q}{p} , \\[1.0ex]
+                            D[X] & = \frac{q}{p^2} .
+                        \end{aligned}
+                    \end{equation*}
+
+                    \subparagraph{Смещённое геометрическое распределение}
+
+                        Смещённое геометрическое распределение получается из геометрического путём преобразования случайной величины $X$ в случайную величину $Y = X + 1$.
+                        
+                        Дискретная случайная величина $Y$ имеет \key{смещённое геометрическое распределение}, если вероятности её возможных значений $0 , \: 1 , \: \ldots , \: k , \: \ldots$ определяются так:
+                        %
+                        \begin{equation*}
+                            p_k = P(Y = k) = q^{k - 1} p ,
+                        \end{equation*}
+                        %
+                        где $p$ --- параметр распределения, ($0 \sleq p \sleq 1$), а $q = 1 - p$.
+
+                        \begin{tabular}{*{7}{|C{1.8cm}}|}
+                            \hline
+                            $x_i$ & 1 & 2 & 3 & $\ldots$ & $k$ & $\ldots$ \\
+                            \hline
+                            $p_i$ & $p$ & $q p$ & $q^2 p$ & $\ldots$ & $q^{k - 1} p$ & $\ldots$ \\
+                            \hline
+                        \end{tabular}
+
+                        Числовые характеристики смещённого геометрического распределения определяются с использованием их свойств:
+                        %
+                        \begin{equation*}
+                            \begin{aligned}
+                                M[Y] & = M[X + 1] = M[X] + 1 =
+                                    \frac{q}{p} + 1 = \frac{1}{p} , \\[1.0ex]
+                                D[Y] & = D[X + 1] = D[X] = \frac{q}{p^2} .
+                            \end{aligned}
+                        \end{equation*}
+
+            \subsubsection{Индикатор случайного события}
+
+                Индикатор случайного события $A$ --- величина $X$, если она равна 1 при осуществлении события $A$ и 0 при осуществлении $\nix{A}$:
+                %
+                \begin{equation*}
+                    X =
+                        \begin{cases}
+                            1 , \quad & A ; \\[1.0ex]
+                            0 , \quad & \nix{A} .
+                        \end{cases}
+                \end{equation*}
+                %               
+                Ряд распределения вероятностей:
+
+                \begin{tabular}{*{3}{|C{2.6cm}}|}
+                    \hline
+                    $x_i$ & 0 & 1  \\
+                    \hline
+                    $P_i$ & $q$ & $p$  \\
+                    \hline
+                \end{tabular}
+
+                где $P_i$ --- вероятность наступления события $A$.
+
+                Числовые характеристики индикатора события:
+                %
+                \begin{equation*}
+                    \begin{aligned}
+                        M[X] & = 0 \cdot q + 1 \cdot p = p , \\[1.0ex]
+                        M[X^2] & = 0^2 \cdot q + 1^2 \cdot p = p , \\[1.0ex]
+                        D[X] & = M[X^2] - m_x^2 = p - p^2 = p (1 - p) = p q , \\[1.0ex]
+                        \sigma_x & = \sqrtt{p q} .
+                    \end{aligned}
+                \end{equation*}
+
+            \subsubsection{Биноминальный закон распределения}
+
+                Дискретная случайная величина $X$ имеет \key{биноминальное распределение}, если её закон распределения описывается \key{формулой Бернулли}:
+                %
+                \begin{equation*}
+                    P(X = k) = P(n, \: k) = C_n^k p^k q^{n - k} ,
+                \end{equation*}
+                %
+                где $p$ --- параметр распределения, ($0 \sleq p \sleq 1$), а $q = 1 - p$.
+
+                Распределение зависит от двух параметров: $n$ и $p$.
+
+                На практике биноминальное распределение возникает при следующих условиях:
+                
+                Пусть производится серия из $n$ испытании, в каждом из которых некоторое событие появляется с вероятностью $p$.
+                
+                Случайная величина $X$, равная числу наступлений события в $n$ опытах, имеет биноминальное распределение.
+                
+                Числовые характеристики:
+                %
+                \begin{equation*}
+                    \begin{aligned}
+                        M[X] & = n , \\[1.0ex]
+                        D[X] & = n p q .
+                    \end{aligned}
+                \end{equation*}
+                
+                Название объясняется тем, что правую часть равенства можно рассматривать как общий член разложения \key{бинома Ньютона}:
+                %
+                \begin{equation*}
+                    \begin{aligned}
+                        & (p + q)^n = C_n^0 p^0 q^n + C_n^n p^1 q^{n - 1} + \ldots +
+                            C_k^n p^k q^{n - k} + C_n^n p^n q^0 = 1 , \\[1.0ex]
+                        & p + q = 1 ,
+                    \end{aligned}
+                \end{equation*}
+                %
+                то есть
+                %
+                \begin{equation*}
+                    \sum\limits_{k = 0}^{n} P_n (k) =
+                        \sum\limits_{k = 0}^{n} C_n^k p^k q^{n - k} = 1 .
+                \end{equation*}
+
+            \subsubsection{Распределение Пуассона}
+
+                Соотношениями, описывающими биноминальное распределение, удобно пользоваться в тех случаях, когда число $n$ велико, а величина $p$ достаточно мала.
+
+                \theorr
+                Если $n \to \infty$, а $p \to 0$ так, что $n p = \lambda \:\: (0 < \lambda < 1)$, то
+                %
+                \begin{equation*}
+                    P(X = k) = C_n^k p^k q^{n - k} = \frac{\lambda^k}{k!} e^{-\lambda}
+                \end{equation*}
+                %
+                при любом $k = 0, \: 1, \: \ldots$.
+
+                Числовые характеристики:
+                %
+                \begin{equation*}
+                    \begin{aligned}
+                        M[X] & = \lambda , \\[1.0ex]
+                        D[X] & = \lambda .
+                    \end{aligned}
+                \end{equation*}
+
+                Закон Пуассона зависит от одного параметра $\lambda$, смысл которого заключается в следующем: он является одновременно и математическим ожиданием, и дисперсией случайной величины $X$.
+
+                \paragraph{Физические условия возникновения распределения Пуассона}
+
+                    Рассмотрим временную ось, на которой будем отмечать моменты возникновения случайных событий (например, отказы компонентов в сложном техническом устройстве, заявки на обслуживание).
+                    
+                    \key{Стационарный} поток случайных событий --- если число событий, приходящихся на участок $\tau$ в общем случае не зависит от расположения этого участка на временной оси и определяется только его длительностью, то есть среднее число событий в единице времени $\Delta t$ --- \key{интенсивность потока \boldmath$\lambda$} --- постоянно.
+                    
+                    \key{Ординарный} поток случайных событий --- если вероятность попадания в некоторый участок $\tau$ двух и более случайных событий пренебрежимо мала по сравнению с вероятностью попадания на него одного события.
+                    
+                    \key{Отсутствует последействие} в потоке --- если вероятность попадания событий на участок $\tau$ не зависит от того, сколько событий попало на другие участки, не пересекающиеся с данным.
+                    
+                    \key{Простейший}, или \key{Пуассоновский}, поток случайных событий --- если он является стационарным, ординарным и без последействия.
+                    
+                    Для пуассоновского потока число событий, поступивших в течение интервала $\tau$, является дискретной случайной величиной с распределением Пуассона с параметром $\alpha = \lambda \tau$.
+
+            \subsubsection{Типовые законы распределения непрервных случайных величин}
+
+                \paragraph{Равномерное распределение}
+
+                    Непрерывная случайная величина $X$ \key{равномерно распределена} в интервале $[a ; \: b]$, если её плотность вероятности в этом интервале постоянна, то есть если все значения в этом интервале равновероятны:
+                    %
+                    \begin{equation*}
+                        f(x) =
+                            \begin{cases}
+                                c , \quad & a \sleq x \sleq b ; \\[1.0ex]
+                                0 , \quad & x \sleq a , \:\: x \sgeq b .
+                            \end{cases}
+                    \end{equation*}
+
+                    Значение постоянной $c$ определяется из условия нормировки:
+                    %
+                    \begin{equation*}
+                        \begin{aligned}
+                            1 & = \int\limits_{-\infty}^{+\infty} f(x) \dif x =
+                                0 + \int\limits_{a}^{b} c \dif x + 0 =
+                                c (b - a) \Rightarrow \\[1.0ex]
+                            c & = \frac{1}{b - a} .
+                        \end{aligned}
+                    \end{equation*}
+
+                    Функция распределения:
+                    %
+                    \begin{equation*}
+                        F(x) =
+                        \begin{cases}
+                            0 , \quad & x < a ; \\[2.0ex]
+                            \dfrac{x - a}{b - a} , \quad & a \sleq x \sleq b ; \\[2.0ex]
+                            1 , \quad & x > b .
+                        \end{cases}
+                    \end{equation*}
+
+                    Числовые характеристики равномерно распределённой случайной величины:
+                    %
+                    \begin{equation*}
+                        \begin{aligned}
+                            M[X] = ~& \int\limits_{-\infty}^{+\infty} x f(x) \dif x = \\[1.0ex]
+                            & \int\limits_{-\infty}^{a} x f(x) \dif x +
+                                \int\limits_{a}^{b} x f(x) \dif x +
+                                \int\limits_{b}^{+\infty} x f(x) \dif x = \\[1.0ex]
+                            & \int\limits_{a}^{b} \frac{x}{b - a} \dif x = \\[1.0ex]
+                            & \frac{1}{b - a} \cdot \frac{x^2}{2} \bigg|_{a}^{b} =
+                                \frac{b^2 - a^2}{2 (b - a)} = \frac{b - a}{2} .
+                        \end{aligned}
+                    \end{equation*}
+                    %
+                    \begin{equation*}
+                        \begin{aligned}
+                            D[X] = ~& \int\limits_{-\infty}^{+\infty}
+                                (x - a)^2 f(x) \dif x = \\[1.0ex]
+                            & \int\limits_{-\infty}^{a} (x - a)^2 f(x) \dif x +
+                                \int\limits_{a}^{b} (x - a)^2 f(x) \dif x +
+                                \int\limits_{b}^{+\infty} (x - a)^2 f(x) \dif x = \\[1.0ex]
+                            & \int\limits_{a}^{b} \frac{(x - a)^2}{b - a} \dif x = \\[1.0ex]
+                            & \frac{1}{b - a} \cdot \frac{(x - a)^3}{3} \bigg|_{a}^{b} =
+                                \frac{(x - \frac{a + b}{2})^3}{3 (b - a)}
+                                \bigg|_{a}^{b} = \\[3.0ex]
+                            & \frac{(b - \frac{a + b}{2})^3 -
+                                (a - \frac{a + b}{2})^3}{3 (b - a)} =
+                                \frac{(b - a)^2}{12} .
+                        \end{aligned}
+                    \end{equation*}
+
+                    Среднее квадратичное отклонение равномерного распределения:
+                    %
+                    \begin{equation*}
+                        \sigma_x = \frac{b - a}{2 \sqrtt{3}} .
+                    \end{equation*}
+
+                    Равномерное распределение случайной величины полностью определяется двумя параметрами: $a$ и $b$ --- интервалом, на котором определена случайная величина.
+
+                    При необходимости можно определить параметры $a$ и $b$ равномерного распределения по известным значениям математического ожидания $m_x$ и дисперсии $D[X]$ случайной величины.
+                    
+                    Для этого составляется система уравнений следующего вида:
+                    %
+                    \begin{equation*}
+                        \begin{cases}
+                            \dfrac{a + b}{2} = m_x; \\[2.0ex]
+                            \dfrac{b - a}{2 \sqrtt{3}} = \sigma_x ,
+                        \end{cases}
+                    \end{equation*}
+                    %
+                    из которой определяются искомые параметры.
+
+                    Вероятность попадания равномерно распределённой случайной величины в интервал $[\alpha ; \: \beta]$ определяется так:
+                    %
+                    \begin{equation*}
+                        P(\alpha \sleq X \sleq \beta) =
+                            \int\limits_{\alpha}^{\beta} f(x) \dif x =
+                            \int\limits_{\alpha}^{\beta} \frac{1}{b - a} \dif x =
+                            \frac{1}{b - a} \int\limits_{\alpha}^{\beta} \dif x =
+                            \frac{\beta - \alpha}{b - a} ,
+                    \end{equation*}
+                    %
+                    где $[\alpha ; \: \beta] \in [a ; \: b]$.
+
+                    Например, шкала измерительного прибора проградуирована в некоторых единицах.
+                    
+                    Случайная величина $X$ --- ошибка при округлении до ближайшего целого деления, которая с постоянной плотностью вероятности принимает любое значение между двумя соседними делениями:
+                    %
+                    \begin{equation*}
+                        X \in [k ; \: k + 1] .
+                    \end{equation*}
+                    
+                    Ошибка измерения имеет равномерное распределение на интервале $\big( \frac{1}{2} ; \: \frac{1}{2} \big)$.
+
+                \paragraph{Показательное, или экспоненциальное, распределение}
+
+                    Непрерывная случайная величина $X$, принимающая только положительные значения, имеет \key{показательное}, или \key{экспоненциальное}, \key{распределение}, если
+                    %
+                    \begin{equation*}
+                        f(x) =
+                        \begin{cases}
+                            0 , \quad & x \sleq 0 ; \\[1.0ex]
+                            \lambda e^{-\lambda x} , \quad & x > 0 .
+                        \end{cases}
+                    \end{equation*}
+
+                    \key{Параметр \boldmath$\lambda$} показательного распределения --- положительная величина, полностью его определяющая.
+
+                    Определим функцию распределения случайной величины:
+
+                    \begin{enumerate}
+                        \item При $t < 0$:
+                        %
+                        \begin{equation*}
+                            F(t) = \int\limits_{-\infty}^{t} f(t) \dif t =
+                                \int\limits_{-\infty}^{t} 0 \dif t = 0 .
+                        \end{equation*}
+
+                        \item При $t \sgeq 0$:
+                        %
+                        \begin{equation*}
+                            \begin{aligned}
+                                F(t) = ~& \int\limits_{-\infty}^{t} f(t) \dif t =
+                                    \int\limits_{-\infty}^{0} 0 \dif t +
+                                    \int\limits_{0}^{t} \lambda e^{-\lambda t} \dif t = \\[1.0ex]
+                                & -e^{-\lambda t} \big|_{0}^{t} =
+                                    -(e^{-\lambda t} - e^0) = 1 - e^{-\lambda t} .
+                            \end{aligned}
+                        \end{equation*}
+                    \end{enumerate}
+
+                    Таким образом, функция распределения имеет вид
+                    %
+                    \begin{equation*}
+                        F(x) =
+                        \begin{cases}
+                            0 , \quad & x < 0 ; \\[1.0ex]
+                            1 - \lambda e^{-\lambda x} , \quad & x \sgeq 0 .
+                        \end{cases}
+                    \end{equation*}
+
+                    График плотности распределения вероятностей экспоненциального распределения:
+
+                    \begin{tikzpicture}
+                        \begin{axis}[samples=100, tick label style={font=\footnotesize}, xtick={0}, ytick={0, 2}, yticklabels={0, $\lambda$}]
+                            \addplot [Light, thick, domain=0:3]
+                                {2 * e^(-2 * x)};
+                        \end{axis}
+                    \end{tikzpicture}
+
+                    График функции распределения вероятностей экспоненциального распределения:
+
+                    \begin{tikzpicture}
+                        \begin{axis}[samples=100, tick label style={font=\footnotesize}, xtick={0}, ytick={0, 1}]
+                            \draw [thin, dotted]
+                                (0, 1) -- (3, 1);
+                            \addplot [Dark, thick, domain=0:3]
+                                {1 - e^(-2 * x)};
+                        \end{axis}
+                    \end{tikzpicture}
+
+                    Числовые характеристики случайной величины:
+                    %
+                    \begin{equation*}
+                        M[X] = \int\limits_{0}^{\infty} x f(x) \dif x =
+                            \lambda \int\limits_{0}^{\infty} x e^{-\lambda x} \dif x .
+                    \end{equation*}
+
+                    Проводя интегрирование по частям и учитывая, что при $x \to \infty \:\: e^x$ стремится к нулю быстрее, чем возрастает любая степень $x$, находим
+                    %
+                    \begin{equation*}
+                        m_x = \frac{1}{\lambda} .
+                    \end{equation*}
+
+                    Дисперсию случайной величины определяем по формуле
+                    %
+                    \begin{equation*}
+                        D[X] = \nu_2 - m_x^2 =
+                            \lambda \int\limits_{0}^{\infty} x^2 e^{-\lambda x} \dif x =
+                            - \frac{1}{\lambda^2} = \frac{1}{\lambda^2} . 
+                    \end{equation*}
+
+                    Показательное распределение тесно связано с простейшим (стационарным пуассоновским) потоком событий:
+                    
+                    Интервал времени $T$ между двумя соседними событиями в простейшем потоке
+                    имеет показательное распределение с параметром, равным интенсивности потока.
+
+                    Функция распределения случайной величины $T$ --- интервала времени между двумя соседними событиями в потоке:
+                    %
+                    \begin{equation*}
+                        F(t) = P(T < t) .
+                    \end{equation*}
+
+                    Рассмотрим на оси $Ot$ интервал времени $T$ между двумя соседними событиями:
+
+                    \begin{tikzpicture}
+                        \draw [{<[length=12pt, width=6pt]}-{>[length=12pt, width=6pt]}]
+                            (2, 1) --
+                            (8, 1) node [above, midway] {$t$};
+                        \draw [{<[length=12pt, width=6pt]}-{>[length=12pt, width=6pt]}]
+                            (2, -1) --
+                            (6, -1) node [below, midway] {$T$};
+                        \fill[fill=Medium!40!white, opacity=0.3]
+                            (2, 0)
+                            rectangle (8, 0.6);
+                        \fill[fill=Medium, opacity=0.3]
+                            (2, 0)
+                            rectangle (6, -0.6);
+                        \draw [-{>[length=12pt, width=6pt]}, darkgray, thick]
+                            (-0.8, 0) --
+                            (10, 0);
+                        \node [darkgray, anchor=north east]
+                            at (10, -0.2) {$t$};
+                        \draw [darkgray, thick]
+                            (0, -0.2) node [below] {$0$} --
+                            (0, 0.2);
+                        \draw
+                            (2, -1.2) --
+                            (2, 1.2);
+                        \draw
+                            (8, 0) --
+                            (8, 1.2);
+                        \draw
+                            (6, -1.2) --
+                            (6, 0);
+                    \end{tikzpicture}
+
+                    Для того, чтобы выполнилось неравенство $T < t$, необходимо, чтобы на хотя бы одно событие потока попало на участок длины $t$. Вероятность этого
+                    %
+                    \begin{equation*}
+                        P(T < t) = P_t (k \sgeq 1) = 1 - P_t (k = 0) = 1 - e^{-\lambda t} .
+                    \end{equation*}
+
+                    Таким образом,
+                    %
+                    \begin{equation*}
+                        F(t) = 1 - e^{-\lambda t} ,
+                    \end{equation*}
+                    %
+                    а плотность распределения
+                    %
+                    \begin{equation*}
+                        f(t) = \lambda e^{-\lambda t} ,
+                    \end{equation*}
+                    %
+                    то есть случайная величина имеет показательное распределение.
+
+                \paragraph{Нормальное распределение, или закон Гаусса}
+
+                    Непрерывная случайная величина $X$ имеет нормальное распределение, если её плотность вероятности имеет вид
+                    %
+                    \begin{equation*}
+                        f(x) = \frac{1}{\sigma \sqrtt{2 \pi}} \,
+                            e^{-\frac{(x - m)^\text{\tiny 2}}{2 \sigma^\text{\tiny 2}}} =
+                            \frac{1}{\sigma \sqrtt{2 \pi}} \,
+                            \exp \! \bigg( \! -\frac{(x - m)^2}{2 \sigma^2} \bigg) .
+                    \end{equation*}
+
+                    Кривая нормального распределения:
+
+                    \begin{tikzpicture}
+                        \def\m{0.7}
+                        \begin{axis}[samples=100, tick label style={font=\footnotesize}, xtick={0, \m}, xticklabels={0, $m$}, ytick={0}]
+                            \draw [thin, dotted]
+                                (\m, 0) -- (\m, 2);
+                            \addplot [Medium!40!white, thick, domain=-2+\m:2+\m]
+                                {2 * e^(-((2 * (x - 0.7))^2))};
+                            \addplot [Medium, thick, domain=-2+\m:2+\m]
+                                {e^(-((x - 0.7)^2))};
+                            \node [Medium!40!white, anchor=south wast]
+                                at (axis cs:1.45, 1.5) {$\sigma$};
+                            \node [Medium, anchor=south wast]
+                                at (axis cs:2.05, 0.7) {$2 \sigma$};
+                        \end{axis}
+                    \end{tikzpicture}
+
+                    Определим числовые характеристики нормально распределённой случайной величины $X$.
+                    
+                    Математическое ожидание
+                    %
+                    \begin{equation*}
+                        M[X] = \frac{1}{\sigma \sqrtt{2 \pi}}
+                            \int\limits_{-\infty}^{+\infty} (x - m)^2 \cdot
+                            \exp \! \bigg( \! -\frac{(x - m)^2}{2 \sigma^2} \bigg) \dif x .
+                    \end{equation*}
+
+                    Применив замену переменной
+                    %
+                    \begin{equation*}
+                        t = \frac{x - m}{\sigma \sqrtt{s}} ,
+                    \end{equation*}
+                    %
+                    получим
+                    %
+                    \begin{equation*}
+                        M[X] = \frac{1}{\sqrtt{\pi}}
+                            \int\limits_{-\infty}^{+\infty} (\sigma t \sqrtt{2} + m)
+                            e^{-t^2} \dif t =
+                            \frac{\sigma \sqrtt{2}}{\sqrtt{\pi}}
+                            \int\limits_{-\infty}^{+\infty} t e^{-t^2} \dif t +
+                            \frac{m}{\sqrtt{\pi}}
+                            \int\limits_{-\infty}^{+\infty} e^{-t^2} \dif t .
+                    \end{equation*}
+
+                    В полученном выражении первый интеграл равен нулю (интеграл в симметричных пределах от нечётной функции), а второй интеграл есть интеграл Эйлера--Пуассона
+                    %
+                    \begin{equation*}
+                        \int\limits_{-\infty}^{+\infty} e^{-t^2} \dif t =
+                        2 \int\limits_{0}^{\infty} e^{-t^2} \dif t = \sqrtt{\pi} .
+                    \end{equation*}
+
+                    Таким образом, математическое ожидание величины $X$ равно $m$:
+                    %
+                    \begin{equation*}
+                        M[X] = m .
+                    \end{equation*}
+
+                    Вычислим дисперсию случайной величины $X$:
+                    %
+                    \begin{equation*}
+                        D[X] = \frac{1}{\sigma \sqrtt{2 \pi}}
+                        \int\limits_{-\infty}^{+\infty} (x - m)^2 \cdot
+                            \exp \! \bigg( \! -\frac{(x - m)^2}{2 \sigma^2} \bigg) \dif x .
+                    \end{equation*}
+
+                    Применив замену переменной
+                    %
+                    \begin{equation*}
+                        t = \frac{x - m}{\sigma \sqrtt{s}} ,
+                    \end{equation*}
+                    %
+                    получим
+                    %
+                    \begin{equation*}
+                        D[X] = \frac{\sigma^2}{\sqrtt{\pi}}
+                            \int\limits_{-\infty}^{+\infty} 2 t^2 e^{-t^2} \dif t .
+                    \end{equation*}
+
+                    Интегрируя по частям, получим
+                    %
+                    \begin{equation*}
+                        D[X] = \frac{\sigma^2}{\sqrtt{\pi}}
+                            \int\limits_{-\infty}^{+\infty} 2 t^2 e^{-t^2} \dif t =
+                            \frac{\sigma^2}{\sqrtt{\pi}}
+                            \bigg( -t e^{-t} \big|_{-\infty}^{+\infty} +
+                            \int\limits_{-\infty}^{+\infty} e^{-t^2} \dif t \bigg) .
+                    \end{equation*}
+
+                    Первое слагаемое равно нулю ($e^{-t^2}$ при $t \to \infty$ убывает быстрее, чем возрастает любая степень $t$), второе слагаемое равно $\sqrtt{\pi}$, откуда
+                    %
+                    \begin{equation*}
+                        D[X] = \sigma^2 .
+                    \end{equation*}
+
+                    Таким образом, нормальное распределение случайной величины полностью описывается двумя числовыми характеристиками: математическим ожиданием $m$ и средним квадратичным отклонением $\sigma$.
+
+                    Рассмотрим влияние параметров $m$ и $\sigma$ на кривую распределения.
+                    
+                    При изменении параметра $m$ кривая $f(x)$, не изменяя формы, будет смещаться вдоль оси абсцисс.
+                    
+                    Изменение $\sigma$ равносильно изменению масштаба кривой по обеим осям. Например, при удвоении $\sigma$ масштаб по оси абсцисс удвоится, а по оси ординат уменьшится в два раза.
+
+                    Центральные моменты нечётной степени для нормально распределённой случайной величины определяются равны нулю.
+                    
+                    Для вычисления центральных моментов чётной степени используется рекуррентное соотношение вида
+                    %
+                    \begin{equation*}
+                        \mu_s = (s - 1) \, \sigma^2 \mu_{s - 2} .
+                    \end{equation*}
+
+                    Определим вероятность попадания нормально распределённой случайной величины $X$ в интервал от $\alpha$ до $\beta$:
+                    %
+                    \begin{equation*}
+                        P(\alpha \sleq X < \beta) = \frac{1}{\sigma \sqrtt{2 \pi}}
+                            \int\limits_{\alpha}^{\beta} \exp \! \bigg( \!
+                            -\frac{(x - m)^2}{2 \sigma^2} \bigg) \dif x .
+                    \end{equation*}
+
+                    Применив замену переменной
+                    %
+                    \begin{equation*}
+                        t = \frac{x - m}{\sigma} ,
+                    \end{equation*}
+                    %
+                    получим
+                    %
+                    \begin{equation*}
+                        P(\alpha \sleq X < \beta) = \frac{1}{\sqrtt{2 \pi}}
+                            \int\limits_{\frac{\alpha - m}{\sigma}}^{\frac{\beta - m}{\sigma}}
+                            e^{-\frac{t^\text{\tiny 2}}{2}} \dif t .
+                    \end{equation*}
+
+                    Так как первообразная для $e^x$ не выражается через элементарные функции, то для вычисления вероятностей событий, связанных с нормальными случайными величинами, используют табулированную \key{функцию Лапласа}
+                    %
+                    \begin{equation*}
+                        \Phi (x) = \frac{1}{\sqrtt{2 \pi}}
+                            \int\limits_{0}^{\infty} e^{-\frac{t^\text{\tiny 2}}{2}} \dif t .
+                    \end{equation*}
+
+                    С помощью этой функции вероятность попадания нормально распределённой случайной величины $X$ на интервал от $\alpha$ до $\beta$ определится так:
+                    %
+                    \begin{equation*}
+                        P(\alpha \sleq X < \beta) =
+                            \Phi \Big( \frac{\beta - m}{\sigma} \Big) -
+                            \Phi \Big( \frac{\alpha - m}{\sigma} \Big) .
+                    \end{equation*}
+
+                    Функция Лапласа обладает следующими свойствами:
+                    \begin{enumerate}
+                        \item $\Phi (0) = 0$.
+                        \item $\Phi (-x) = -\Phi (x)$.
+                        \item $\Phi (-\infty) = 0,5$.
+                    \end{enumerate}
+
+                    Функция распределения нормально распределённой случайной величины через функцию Лапласа выражается так:
+                    %
+                    \begin{equation*}
+                        F(x) = 0,5 + \Phi \Big( \frac{x - m}{\sigma} \Big) .
+                    \end{equation*}
+
+                    Таблицы значений функции $\Phi (x)$ даны в приложениях к учебникам по теории вероятностей.
+
+                    Нормально распределённая случайная величина возникает в тех случаях, когда складывается много независимых (или слабо зависимых) случайных величин $X_1 , \: X_2 , \: \ldots , \: X_n$.
+                    
+                    Тогда, каковы бы ни были законы распределения отдельных случайных величин $X_i$, закон распределения их суммы будет близок к нормальному распределению.
+                    
+                    В частности, ошибки измерений распределяются по закону, близкому к нормальному.
 
 \end{document}
