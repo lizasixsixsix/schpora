@@ -106,7 +106,7 @@
 
 \DeclareMathOperator{\const}{const}
 
-\DeclareMathOperator{\exp}{exp}
+\DeclareMathOperator{\expo}{exp}
 
 \DeclareMathOperator{\cov}{Cov}
 
@@ -330,6 +330,9 @@
 \renewcommand\labelitemi{{\color{Light}$\bullet$}}
 \renewcommand\labelitemii{{\color{Medium}$\bullet$}}
 
+\renewcommand\labelenumi{{\color{Light}\bfseries\arabic{enumi}.}}
+\renewcommand\labelenumii{{\color{Medium}\bfseries\arabic{enumi}.}}
+
 %----
 
 \usepackage{icomma}
@@ -345,7 +348,6 @@
 %----
 
 \newcommand{\key}[1]{{\color{Medium}\bfseries #1}}
-%\newcommand{\key}[1]{{\color{Medium}\textbf{#1}}}
 
 \newcommand{\note}{{\color{Dark}\bfseries {\Large !} Замечание: \newline}}
 
@@ -431,18 +433,18 @@
                 Пусть каждому событию $A$ ставится в соответствие число $P(A)$, называемое вероятностью события. Так как событие --- множество, то вероятность события --- функция множества. Вероятности событий удовлетворяют следующим аксиомам:
                 \begin{enumerate}
                     \item Вероятность любого события заключена между нулем и единицей:
-                        %
-                        \begin{equation*}
-                            0 \leqslant P(A) \leqslant 1 .
-                        \end{equation*}
+                    %
+                    \begin{equation*}
+                        0 \leqslant P(A) \leqslant 1 .
+                    \end{equation*}
                         
                     \item Если $A$ и $B$ несовместные события, то
-                        %
-                        \begin{equation*}
-                            P(A + B) = P(A) + P(B) .
-                        \end{equation*}
-                        %
-                        Эта аксиома обобщается на любое количество событий, если все они попарно несовместны.
+                    %
+                    \begin{equation*}
+                        P(A + B) = P(A) + P(B) .
+                    \end{equation*}
+                    %
+                    Эта аксиома обобщается на любое количество событий, если все они попарно несовместны.
                 \end{enumerate}
 
             \subsubsection{Случаи}
@@ -830,31 +832,31 @@
 
                     \begin{itemize}
                         \item ~\ldots~ менее $k$ раз:
-                            %
-                            \begin{equation*}
-                                P(n, \: < k) = P(n, \: 0) + P(n, \: 0) + \ldots + P(n, \: k - 1) =
-                                    \sum\limits_{i = 0}^{k - 1} P(n, \: i) .
-                            \end{equation*}
+                        %
+                        \begin{equation*}
+                            P(n, \: < k) = P(n, \: 0) + P(n, \: 0) + \ldots + P(n, \: k - 1) =
+                                \sum\limits_{i = 0}^{k - 1} P(n, \: i) .
+                        \end{equation*}
 
                         \item ~\ldots~ более $k$ раз:
-                            %
-                            \begin{equation*}
-                                P(n, \: > k) = P(n, \: k + 1) + P(n, \: k + 2) + \ldots +
-                                    P(n, \: n) = \sum\limits_{i = k + 1}^{n} P(n, \: i) .
-                            \end{equation*}
+                        %
+                        \begin{equation*}
+                            P(n, \: > k) = P(n, \: k + 1) + P(n, \: k + 2) + \ldots +
+                                P(n, \: n) = \sum\limits_{i = k + 1}^{n} P(n, \: i) .
+                        \end{equation*}
 
                         \item ~\ldots~ от $k_1$ до $k_2$ раз:
-                            %
-                            \begin{equation*}
-                                P(n, \: k_1 \sleq i \sleq k_2) = \sum\limits_{i = k_1}^{i = k_2} P(n, i) =
-                                    \sum\limits_{i = k_1}^{i = k_2} C_n^k p^k q^{n - k}.
-                            \end{equation*}
+                        %
+                        \begin{equation*}
+                            P(n, \: k_1 \sleq i \sleq k_2) = \sum\limits_{i = k_1}^{i = k_2} P(n, i) =
+                                \sum\limits_{i = k_1}^{i = k_2} C_n^k p^k q^{n - k}.
+                        \end{equation*}
 
                         \item ~\ldots~ хотя бы один раз:
-                            %
-                            \begin{equation*}
-                                P(n, \: \sgeq 1) = P_n(1 \sleq k \sleq n) = 1 - q^n.
-                            \end{equation*}
+                        %
+                        \begin{equation*}
+                            P(n, \: \sgeq 1) = P_n(1 \sleq k \sleq n) = 1 - q^n.
+                        \end{equation*}
                     \end{itemize}
 
                     \key{Наивероятнейшее число \boldmath$k_0$} появления события $A$ --- число, которому соответствует максимальная биномиальная вероятность $P_n(k_0)$.
@@ -1293,7 +1295,8 @@
                         \path [name path=B]
                             (\pgfkeysvalueof{/pgfplots/xmin}, 0) --
                             (\pgfkeysvalueof{/pgfplots/xmax}, 0);
-                        \addplot [Light, fill opacity=0.3] fill between [of=A and B, soft clip={domain=0.5:1.5}];
+                        \addplot [Light, fill opacity=0.3]
+                            fill between [of=A and B, soft clip={domain=0.5:1.5}];
                     \end{axis}
                 \end{tikzpicture}
 
@@ -1312,7 +1315,8 @@
                         \path [name path=B]
                             (\pgfkeysvalueof{/pgfplots/xmin}, 0) --
                             (\pgfkeysvalueof{/pgfplots/xmax}, 0);
-                        \addplot [Dark, fill opacity=0.3] fill between [of=A and B, soft clip={domain=-3:0.5}];
+                        \addplot [Dark, fill opacity=0.3]
+                            fill between [of=A and B, soft clip={domain=-3:0.5}];
                     \end{axis}
                 \end{tikzpicture}
 
@@ -2325,7 +2329,7 @@
                         f(x) = \frac{1}{\sigma \sqrtt{2 \pi}} \,
                             e^{-\frac{(x - m)^\text{\tiny 2}}{2 \sigma^\text{\tiny 2}}} =
                             \frac{1}{\sigma \sqrtt{2 \pi}} \,
-                            \exp \! \bigg( \! -\frac{(x - m)^2}{2 \sigma^2} \bigg) .
+                             \expo \! \bigg( \! -\frac{(x - m)^2}{2 \sigma^2} \bigg) .
                     \end{equation*}
 
                     Кривая нормального распределения:
@@ -2339,10 +2343,10 @@
                                 {2 * e^(-((2 * (x - 0.7))^2))};
                             \addplot [Medium, thick, domain=-2+\m:2+\m]
                                 {e^(-((x - 0.7)^2))};
-                            \node [Medium!40!white, anchor=south wast]
-                                at (axis cs:1.45, 1.5) {$\sigma$};
-                            \node [Medium, anchor=south wast]
-                                at (axis cs:2.05, 0.7) {$2 \sigma$};
+                            \node [Medium!40!white, anchor=south west]
+                                at (1.05, 1.3) {$\sigma$};
+                            \node [Medium, anchor=south west]
+                                at (1.5, 0.53) {$2 \sigma$};
                         \end{axis}
                     \end{tikzpicture}
 
@@ -2353,7 +2357,7 @@
                     \begin{equation*}
                         M[X] = \frac{1}{\sigma \sqrtt{2 \pi}}
                             \int\limits_{-\infty}^{+\infty} (x - m)^2 \cdot
-                            \exp \! \bigg( \! -\frac{(x - m)^2}{2 \sigma^2} \bigg) \dif x .
+                             \expo \! \bigg( \! -\frac{(x - m)^2}{2 \sigma^2} \bigg) \dif x .
                     \end{equation*}
 
                     Применив замену переменной
@@ -2392,7 +2396,7 @@
                     \begin{equation*}
                         D[X] = \frac{1}{\sigma \sqrtt{2 \pi}}
                         \int\limits_{-\infty}^{+\infty} (x - m)^2 \cdot
-                            \exp \! \bigg( \! -\frac{(x - m)^2}{2 \sigma^2} \bigg) \dif x .
+                             \expo \! \bigg( \! -\frac{(x - m)^2}{2 \sigma^2} \bigg) \dif x .
                     \end{equation*}
 
                     Применив замену переменной
@@ -2444,7 +2448,7 @@
                     %
                     \begin{equation*}
                         P(\alpha \sleq X < \beta) = \frac{1}{\sigma \sqrtt{2 \pi}}
-                            \int\limits_{\alpha}^{\beta} \exp \! \bigg( \!
+                            \int\limits_{\alpha}^{\beta}  \expo \! \bigg( \!
                             -\frac{(x - m)^2}{2 \sigma^2} \bigg) \dif x .
                     \end{equation*}
 
@@ -2497,5 +2501,231 @@
                     Тогда, каковы бы ни были законы распределения отдельных случайных величин $X_i$, закон распределения их суммы будет близок к нормальному распределению.
                     
                     В частности, ошибки измерений распределяются по закону, близкому к нормальному.
+
+        \newpage
+        
+        \subsection{Системы случайных величин}
+
+            \subsubsection{Понятие системы случайных величин}
+
+                \key{Система случайных величин}, или \key{случайный вектор}, или \key{многомерная случайная величина} --- любая упорядоченная совокупность случайных величин $X = \{ X_1 , \: X_2 , \: \ldots , \: X_n \}$.
+
+                Случайные величины $\{ X_1 , \: X_2 , \: \ldots , \: X_n \}$, входящие в систему могут быть как непрерывными, так и дискретными.
+                
+                Для наглядности рассмотрения пользуются геометрической интерпретацией:
+                
+                Систему двух случайных величин $\{ X, \: Y \}$ можно представить случайной точкой на плоскости с координатами $X$ и $Y$ или случайным вектором, направленным из начала координат в точку $(X, \: Y)$.
+                
+                Свойства случайных величин не исчерпываются свойствами отдельных величин, входящих в систему. Для описания характеристик систем случайных величин необходимы отдельные свойства.
+                
+                Рассмотрим эти свойства для $n$-мерного и двумерного случаев.
+
+            \subsubsection{Функция распределения системы случайных величин}
+
+                \key{Функция распределения}, или \key{совместная функция распределения} системы случайных величин --- вероятность совместного выполнения неравенств $X_1 < x_1 ; \: \ldots , \: X_n < x_n$:
+                %
+                \begin{equation*}
+                    F(x_1 , \: \ldots , \: x_n) =
+                        P \big( (X_1 < x_1) \cap \ldots \cap (X_n < x_n) \big) .
+                \end{equation*}
+
+                Для случая \key{двумерной случайной величины}
+                %
+                \begin{equation*}
+                    F(x, \: y) = P \big( (X < x) \cap (Y < y) \big) .
+                \end{equation*}
+
+                Геометрически функция распределения $F(x, \: y)$ --- это вероятность попадания случайной точки $(X, \: Y)$ в бесконечный квадрант с вершиной в точке $(x, \: y)$, лежащей левее и ниже её:
+
+                \begin{tikzpicture}
+                    \begin{axis}[tick label style={font=\footnotesize}, xtick={0, 1}, xticklabels={0, $x$}, ytick={0, 1}, yticklabels={0, $y$}, xmin=-1, xmax=2, ymin=-1, ymax=2]
+                        \addplot+ [name path=A, Medium, thick, domain=-1:1, no marks]
+                            {1};
+                        \path [name path=B]
+                            (\pgfkeysvalueof{/pgfplots/xmin}, \pgfkeysvalueof{/pgfplots/ymin}) --
+                            (\pgfkeysvalueof{/pgfplots/xmax}, \pgfkeysvalueof{/pgfplots/ymin});
+                        \addplot [Light, fill opacity=0.15]
+                            fill between [of=A and B, soft clip={domain=-1:1}];
+                        \draw [Medium, thick]
+                            (1, -1) -- (1, 1);
+                        \fill [Medium, fill=Medium]
+                            (1, 1) circle (2pt)
+                            node [anchor=south west] {$(x, \: y)$};
+                    \end{axis}
+                \end{tikzpicture}
+
+                \paragraph{Свойства функции распределения}
+
+                    \begin{enumerate}
+                        \item Значения функции распределения удовлетворяют двойному неравенству
+                        %
+                        \begin{equation*}
+                            \begin{aligned}
+                                & 0 \sleq F(x_1 , \: \ldots , \: x_n) \sleq 1 , \\[1.0ex]
+                                & 0 \sleq F(x, \: y) \sleq 1 .
+                            \end{aligned}
+                        \end{equation*}
+
+                        \prooff
+                        Вытекает из определения функции распределения как вероятности: вероятность есть неотрицательное число, не превышающее 1. \qedd
+
+                        \item Функция распределения $F(x_1 , \: \ldots , \: x_n)$ --- неубывающая по каждому из аргументов, то есть
+                        %
+                        \begin{equation*}
+                            \begin{aligned}
+                                x_i ' < x_i '' \: & \Rightarrow \: F(x_1 , \: \ldots , \:
+                                    x_i ' , \: \ldots , \: x_n) \sleq F(x_1 , \: \ldots , \:
+                                    x_i '' , \: \ldots , \: x_n) , \\[1.0ex]
+                                x_1 < x_2 \: & \Rightarrow \: F(x_1 , \: y) \sleq
+                                    F(x_2 , \: y) , \\[1.0ex]
+                                y_1 < y_2 \: & \Rightarrow \: F(x , \: y_1) \sleq
+                                    F(x , \: y_2) .
+                            \end{aligned}
+                        \end{equation*}
+
+                        \prooff
+                        Рассмотрим для случая двумерной случайной величины.
+                        
+                        При увеличении какого-нибудь из аргументов $(x, \: y)$ квадрант, заштрихованный на рисунке, увеличивается.
+                        
+                        Следовательно, вероятность попадания в него случайной точки $(X, \: Y)$ уменьшаться не может. \qedd
+
+                        \item Если хотя бы один из аргументов функции распределения обращается в $-\infty$, то функция распределения равна $0$:
+                        %
+                        \begin{equation*}
+                            \begin{aligned}
+                                & F(x_1 , \: \ldots , \: -\infty , \: \ldots , x_n) = 0 , \\[1.0ex]
+                                & F(-\infty , \: y) = 0 , \\[1.0ex]
+                                & F(x , \: -\infty) = 0 .
+                            \end{aligned}
+                        \end{equation*}
+
+                        \prooff
+                        По определению функции распределения,
+                        %
+                        \begin{equation*}
+                            \begin{aligned}
+                                & F(x_1 , \: \ldots , \: -\infty , \: \ldots , \: x_n) = \\[1.0ex]
+                                & \qquad P \big( (X_1 < x_1) \cap \ldots \cap
+                                    (X_i < -\infty) \cap \ldots \cap (X_n < x_n) \big) .
+                            \end{aligned}
+                        \end{equation*}
+
+                        Событие $\big( (X_1 < x_1) \cap \ldots \cap (X_i < -\infty) \cap \ldots \cap (X_n < x_n) \big)$ --- невозможное событие, так как невозможным является событие $(X_i < -\infty)$. Тогда
+                        %
+                        \begin{equation*}
+                            F(x_1 , \: \ldots , \: -\infty , \: \ldots , \: x_n) = 0 . \qedd
+                        \end{equation*}
+
+                        \item Если все аргументы функции распределения $F(x_1 , \: \ldots , \: x_n)$ равны $+\infty$, то функция распределения равна 1:
+                        %
+                        \begin{equation*}
+                            F(+\infty , \: +\infty , \: +\infty) = 1 .
+                        \end{equation*}
+
+                        \prooff
+                        Следует из определения функции распределения системы случайных величин:
+                        %
+                        \begin{equation*}
+                            \lim\limits_{\substack{x_1 \to +\infty\\\cdots\\x_n \to +\infty}}
+                                F(x_1 , \: \ldots , \: x_n) = P \big( (X_1 < +\infty) \cap
+                                \ldots \cap (X_n < +\infty) \big) = 1. \qedd
+                        \end{equation*}
+
+                        \item Если один из аргументов обращается в $+\infty$, то функция распределения $F(x_1 , \: \ldots , \: x_n)$ становится равной функции распределения $n - 1$ случайной величины:
+                        %
+                        \begin{equation*}
+                            \begin{aligned}
+                                & F(x_1 , \: \ldots , \: +\infty , \: \ldots , \: x_n) =
+                                    F(x_1 , \: \ldots , \: x_{i - 1} , \: x_{i + 1} , \:
+                                    \ldots , \: x_n) , \\[1.0ex]
+                                & F(+\infty , \: y) = F(y) , \\[1.0ex]
+                                & F(x , \: +\infty) = F(x) .
+                            \end{aligned}
+                        \end{equation*}
+
+                        \prooff
+                        По определению функции распределения,
+                        %
+                        \begin{equation*}
+                            \begin{aligned}
+                                & F(x_1 , \: \ldots , \: +\infty , \: \ldots , \: x_n) = \\[1.0ex]
+                                & \qquad P \big( (X_1 < x_1) \cap \ldots \cap
+                                    (X_i < +\infty) \cap \ldots \cap (X_n < x_n) \big).
+                            \end{aligned}
+                        \end{equation*}
+
+                        Событие $(X_i < +\infty)$ является достоверным событием. Тогда
+                        %
+                        \begin{equation*}
+                            \begin{aligned}
+                                & P \big( (X_1 < x_1) \cap \ldots \cap (X_i < +\infty) \cap
+                                \ldots \cap (X_n < x_n) \big) = \\[1.0ex]
+                                & \qquad P \big( (X_1 < x_1) \cap \ldots \cap (X_n < x_n)
+                                    \big) = \\[1.0ex]
+                                & \qquad F(x_1 , \: \ldots , \: x_{i - 1} , \: x_{i + 1} , \:
+                                    \ldots , \: x_n) .
+                            \end{aligned} \qedd*{-4.3ex}
+                        \end{equation*}
+
+                        \item Вероятность попадания в прямоугольную область
+                        %
+                        \begin{equation*}
+                            \begin{aligned}
+                                & P(\alpha \sleq X \sleq \beta ; \:
+                                    \gamma \sleq Y \sleq \delta) = \\[1.0ex]
+                                & \qquad F(\beta , \: \delta) - F(\beta , \: \gamma) - 
+                                    F(\alpha , \: \delta) + F(\alpha , \: \gamma) :
+                            \end{aligned}
+                        \end{equation*}
+
+                        \begin{tikzpicture}
+                            \begin{axis}[tick label style={font=\footnotesize}, xtick={1, 2}, xticklabels={$\alpha$, $\beta$}, ytick={1, 2}, yticklabels={$\gamma$, $\delta$}, xmin=0.25, xmax=2.6, ymin=0.25, ymax=2.6]
+                                \addplot+ [name path=A, Medium, thick, domain=1:2, no marks]
+                                    {1};
+                                \addplot+ [name path=B, Medium, thick, domain=1:2, no marks]
+                                    {2};
+                                \addplot [Light, fill opacity=0.15]
+                                    fill between [of=A and B, soft clip={domain=1:2}];
+                                \draw [Medium, thick]
+                                    (1, 1) -- (1, 2);
+                                \draw [Medium, thick]
+                                    (2, 1) -- (2, 2);
+                                \draw [Medium, thick, dotted]
+                                    (0.25, 1) -- (1, 1);
+                                \draw [Medium, thick, dotted]
+                                    (0.25, 2) -- (1, 2);
+                                \draw [Medium, thick, dotted]
+                                    (1, 0.25) -- (1, 1);
+                                \draw [Medium, thick, dotted]
+                                    (2, 0.25) -- (2, 1);
+                                \fill [Medium, fill=Medium]
+                                    (1, 1) circle (1.6pt)
+                                    node [anchor=north east] {$\scriptstyle(\alpha, \: \gamma)$};
+                                \fill [Medium, fill=Medium]
+                                    (1, 2) circle (1.6pt)
+                                    node [anchor=south east] {$\scriptstyle(\alpha, \: \delta)$};
+                                \fill [Medium, fill=Medium]
+                                    (2, 2) circle (1.6pt)
+                                    node [anchor=south west] {$\scriptstyle(\beta, \: \delta)$};
+                                \fill [Medium, fill=Medium]
+                                    (2, 1) circle (1.6pt)
+                                    node [anchor=north west] {$\scriptstyle(\beta, \: \gamma)$};
+                                \node [Medium] at (1.5, 1.5) {$R$};
+                            \end{axis}
+                        \end{tikzpicture}
+                        
+                        Вероятность попадания в прямоугольник $R$ равна вероятности попадания в квадрант с вершиной в точке $(\beta , \: \delta)$ минус вероятность попадания в квадрант с вершиной в точке $(\beta , \: \gamma)$ минус вероятность попадания в квадрант с вершиной в точке $(\alpha , \: \delta)$ плюс вероятность попадания в квадрант с вершиной в точке $(\alpha , \: \gamma)$, которую мы вычли дважды.
+                    \end{enumerate}
+
+            \subsubsection{Система двух дискретных случайных величин. Матрица вероятности}
+
+            \subsubsection{Система двух непрерывных случайных величин. Совместная плотность вероятности}
+
+            \subsubsection{Многомерные непрерывные случайные величины}
+
+            \subsubsection{Зависимые и независимые двумерные случайные величины}
+
+            \subsubsection{Системы зависимых случайных величин}
 
 \end{document}
