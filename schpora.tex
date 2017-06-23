@@ -1063,8 +1063,8 @@
 
                 \begin{tikzpicture}
                     \draw [{<[length=12pt, width=6pt]<[length=12pt, width=6pt]}-{>[length=12pt, width=6pt]}]
-                        (0, 1) --
-                        (6, 1) node [above] {$X < x$};
+                        (0, 1) -- node [above] {$X < x$}
+                        (6, 1);
                     \fill[fill=Light, opacity=0.3]
                         (0, 0)
                         rectangle (6, 0.6);
@@ -1095,14 +1095,14 @@
 
                     \begin{tikzpicture}
                         \draw [{<[length=12pt, width=6pt]<[length=12pt, width=6pt]}-{>[length=12pt, width=6pt]}]
-                            (0, 1) --
-                            (6, 1) node [above] {$A$};
+                            (0, 1) -- node [above] {$A$}
+                            (6, 1);
                         \draw [{<[length=12pt, width=6pt]}-{>[length=12pt, width=6pt]}]
-                            (6, 1) --
-                            (8, 1) node [above] {$B$};
+                            (6, 1) -- node [above] {$B$}
+                            (8, 1);
                         \draw [{<[length=12pt, width=6pt]<[length=12pt, width=6pt]}-{>[length=12pt, width=6pt]}]
-                            (0, -1) --
-                            (8, -1) node [below] {$C$};
+                            (0, -1) -- node [below] {$C$}
+                            (8, -1);
                         \fill[fill=Light, opacity=0.3]
                             (0, 0)
                             rectangle (6, 0.6);
