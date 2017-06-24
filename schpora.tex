@@ -87,15 +87,17 @@
 
 %----
 
+\newcommand{\opa}{0.05}
+
 \newcommand\BackgroundPic{%
     \put(0,0){%
         \parbox[b][\paperheight]{\paperwidth}{%
             \centering{%
                 \makebox[0pt]{%
-                    \pgfsetfillopacity{0.05}%
+                    \pgfsetfillopacity{\opa}%
                     \includegraphics[trim = 0mm 0mm 0mm 0mm, % l b r t
                                      clip, % for trim
-                                     height=\paperheight]{Images/Drops}}%
+                                     height=\paperheight]{Drops}}%
                     \pgfsetfillopacity{1.0}
             }
         }
@@ -108,7 +110,7 @@
 
 \DeclareMathOperator{\expo}{exp}
 
-\DeclareMathOperator{\cov}{Cov}
+\DeclareMathOperator{\cov}{cov}
 
 \makeatletter
 \newsavebox\myboxA
@@ -358,7 +360,7 @@
 %----end of preambula----
 
 \begin{document}
-    \pgfsetfillopacity{0.05}
+    \pgfsetfillopacity{\opa}
     \AddToShipoutPicture{\BackgroundPic}
     \pgfsetfillopacity{1.0}
     
